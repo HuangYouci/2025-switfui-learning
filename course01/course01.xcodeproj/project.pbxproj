@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		7332E6E32D44F5BC0013FE4B /* course01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = course01.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7332E6E32D44F5BC0013FE4B /* course01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = course01.app; path = "/Users/huangyouci/Documents/GitHub/2025-switfui-learning/course01/build/Debug-iphoneos/course01.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				7332E6E52D44F5BC0013FE4B /* course01 */,
-				7332E6E42D44F5BC0013FE4B /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		7332E6E42D44F5BC0013FE4B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7332E6E32D44F5BC0013FE4B /* course01.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,7 +86,7 @@
 			mainGroup = 7332E6DA2D44F5BC0013FE4B;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 7332E6E42D44F5BC0013FE4B /* Products */;
+			productRefGroup = 7332E6DA2D44F5BC0013FE4B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

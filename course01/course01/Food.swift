@@ -5,7 +5,12 @@
 //  Created by 黃宥琦 on 2025/1/26.
 //
 
-struct Food: Equatable {
+import Foundation
+
+struct Food: Equatable, Identifiable {
+    
+    let id = UUID()
+    
     var name: String
     var image: String
     var calorie: Double
