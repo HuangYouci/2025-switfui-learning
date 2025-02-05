@@ -41,11 +41,11 @@ struct ContentView: View {
                     .transition(.scale)
                 
                 Button(role: .none){
-                    showInfo = true
+                    showInfo.toggle()
                 } label: {
-                    Text("營養資訊")
+                    Image(systemName: "info.circle.fill")
+                        .foregroundColor(.secondary)
                 }
-                .buttonStyle(.bordered)
                 
             }
             
@@ -127,28 +127,6 @@ struct ContentView: View {
         .animation(.easeInOut, value: selectedFood)
     }
 }
-
-extension View {
-    func mainButtonStyle() -> some View {
-        font(.title)
-        .buttonBorderShape(.capsule)
-        .controlSize(.large)
-    }
-}
-
-//extension ContentView {
-//    init(selectedFood: Food){
-//        _selectedFood = State(wrappedValue: selectedFood)
-//    }
-//}
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView(selectedFood: .examples.first!)
-//        ContentView(selectedFood: .examples.first!).previewDevice(PreviewDevice(rawValue: "iPad Pro 13-inch (M4)"))
-//        ContentView(selectedFood: .examples.first!).previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
-//    }
-//}
 
 #Preview {
     ContentView()

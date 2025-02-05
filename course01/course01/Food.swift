@@ -13,10 +13,10 @@ struct Food: Equatable, Identifiable {
     
     var name: String
     var image: String
-    var calorie: Double
-    var carb: Double
-    var fat: Double
-    var protein: Double
+    var calorie: Double = 0
+    var carb: Double = 0
+    var fat: Double = 0
+    var protein: Double = 0
     
     static let examples = [
         Food(name: "漢堡", image: "🍔", calorie: 294, carb: 14, fat: 24, protein: 27),
