@@ -88,7 +88,7 @@ struct AdminView: View {
                                 }, label: {
                                     Text("執行")
                                 })
-                                .disabled(editingTempScore.isEmpty)
+                                .disabled(editingTempScore2.isEmpty)
                                 .buttonStyle(.borderedProminent)
                             }
                         }
@@ -131,6 +131,8 @@ struct AdminView: View {
                 Button(role: .none, action: {
                     if password == "950509" {
                         hasPremission = true
+                        password = ""
+                    } else {
                         password = ""
                     }
                 }, label: {

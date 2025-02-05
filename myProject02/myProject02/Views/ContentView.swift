@@ -18,6 +18,10 @@ struct ContentView: View {
                 }
             SettingsView()
                 .tabItem {
+                    Image(systemName: "person.fill")
+                }
+            AdminView()
+                .tabItem{
                     Image(systemName: "gearshape.fill")
                 }
         }
