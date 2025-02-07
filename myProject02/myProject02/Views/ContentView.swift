@@ -16,12 +16,12 @@ struct ContentView: View {
                 .tabItem {
                     Image(systemName: "house.fill")
                 }
+            StoreView()
+                .tabItem{
+                    Image(systemName: "cart.fill")
+                }
             SettingsView()
                 .tabItem {
-                    Image(systemName: "person.fill")
-                }
-            AdminView()
-                .tabItem{
                     Image(systemName: "gearshape.fill")
                 }
         }
