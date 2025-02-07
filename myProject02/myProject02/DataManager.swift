@@ -9,6 +9,8 @@ import SwiftUI
 
 class DataManager: ObservableObject {
     
+    // UserData
+    
     @Published var userScore: Int {
         didSet {
             UserDefaults.standard.set(userScore, forKey: "userScore")
@@ -23,28 +25,39 @@ class DataManager: ObservableObject {
     
     @Published var userItemA: Int {
         didSet {
-            UserDefaults.standard.set(userScore, forKey: "userItemA")
+            UserDefaults.standard.set(userItemA, forKey: "userItemA")
         }
     }
     
     @Published var userItemB: Int {
         didSet {
-            UserDefaults.standard.set(userScore, forKey: "userItemB")
+            UserDefaults.standard.set(userItemB, forKey: "userItemB")
         }
     }
     
     @Published var userItemC: Int {
         didSet {
-            UserDefaults.standard.set(userScore, forKey: "userItemC")
+            UserDefaults.standard.set(userItemC, forKey: "userItemC")
+        }
+    }
+    
+    // System
+    
+    @Published var systemPromo: Double {
+        didSet {
+            UserDefaults.standard.set(systemPromo, forKey: "systemPromo")
         }
     }
     
     init() {
+        // UserData
         self.userScore = UserDefaults.standard.integer(forKey: "userScore")
         self.userItemA = UserDefaults.standard.integer(forKey: "userItemA")
         self.userItemB = UserDefaults.standard.integer(forKey: "userItemB")
         self.userItemC = UserDefaults.standard.integer(forKey: "userItemC")
         self.userName = UserDefaults.standard.string(forKey: "userName") ?? "用戶"
+        // System
+        self.systemPromo = UserDefaults.standard.double(forKey: "systemPromo") == 0 ? 1 : UserDefaults.standard.double(forKey: "systemPromo")
     }
     
     // MARK: FUNCTIONS

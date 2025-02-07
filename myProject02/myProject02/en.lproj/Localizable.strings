@@ -1,0 +1,49 @@
+//
+//  Localizable.strings
+//  myProject02
+//
+//  Created by 黃宥琦 on 2025/2/7.
+//
+// MARK: ENGLISH.LPROJ
+
+
+// Home
+"您好，" = "Welcome";
+"您目前的獎勵積分" = "Your Reward Points";
+
+// Store
+"15分鐘" = "15 M";
+"1小時" = "1 H";
+"整天" = "1 D";
+
+// Settings
+"基本資料" = "Basic Information";
+"名稱" = "Name";
+"管理員功能" = "Administrator Function";
+"管理員設定" = "Administrator Settings";
+"毀滅性功能" = "Destructive Function";
+"清除所有資料" = "Clear All Data";
+"請輸入密碼以進入本畫面" = "Please enter the password to enter this page";
+"密碼" = "Password";
+"送出" = "Submit";
+"獎勵積分" = "Reward Points";
+"用戶名稱" = "Username";
+"增減積分" = "Add/Subtract Points";
+"兌換券" = "Voucher";
+"15 分鐘" = "15 M";
+"1 小時" = "1 H";
+"商店優惠" = "Store Discounts";
+"全面折扣" = "Whole Store Discounts";
+"倍" = "x";
+"其他操作" = "Other Operations";
+"登出" = "Logout";
+"重置" = "Reset";
+"請輸入正負整數" = "Please enter a positive or negative integer";
+"設定" = "Settings";
+
+// Confirmation
+"確定要重置獎勵積分和兌換券？" = "Are you sure you want to reset reward points and vouchers?";
+"確認" = "Confirm";
+"取消" = "Cancel";
+
+"清除所有資料" = "Clear All Data";

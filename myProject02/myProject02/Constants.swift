@@ -9,7 +9,6 @@
 struct Constants {
     static let PASSWORD: Int = 950509
     
-    static let PROMOTION: Double = 0.5
     static let ITEMACOST: Double = 100
     static let ITEMBCOST: Double = 400
     static let ITEMCCOST: Double = 2000

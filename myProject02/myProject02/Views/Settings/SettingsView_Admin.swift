@@ -15,6 +15,7 @@ struct AdminView: View {
     @State private var editingItemA: String = ""
     @State private var editingItemB: String = ""
     @State private var editingItemC: String = ""
+    @State private var editingStorePromo: String = ""
     
     @State private var hasPremission: Bool = false
     @State private var editingPassword: String = ""
@@ -24,6 +25,7 @@ struct AdminView: View {
     @FocusState private var isTextFieldFocusedOnItemA: Bool
     @FocusState private var isTextFieldFocusedOnItemB: Bool
     @FocusState private var isTextFieldFocusedOnItemC: Bool
+    @FocusState private var isTextFieldFocusedOnStorePromo: Bool
     
     @State private var showingConfirmationForReset: Bool = false
     
@@ -35,7 +37,7 @@ struct AdminView: View {
                 Text("管理員設定")
                     .font(.largeTitle)
                     .bold()
-                    .padding(20)
+                    .padding()
                 Spacer()
             }
             
@@ -60,6 +62,7 @@ struct AdminView: View {
                             Spacer()
                             
                             TextField(String(userData.userScore), text: $editingScore)
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
                                 .focused($isTextFieldFocusedOnScore)
                                 .onAppear {
@@ -86,6 +89,7 @@ struct AdminView: View {
                                 .foregroundColor(.accentColor)
                             
                             TextField("請輸入正負整數", text: $editingRM)
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
                                 .focused($isTextFieldFocusedOnRM)
                             
@@ -105,16 +109,15 @@ struct AdminView: View {
                             }
                         }
                     }
-                    
-                    Section("兌換券"){
+                    Section("兌換券") {
                         
                         HStack{
                             Text("15 分鐘")
-                                .frame(minWidth: 65, alignment: .leading)
                                 .foregroundStyle(Color.accentColor)
                             Spacer()
                             
                             TextField(String(userData.userItemA), text: $editingItemA)
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
                                 .focused($isTextFieldFocusedOnItemA)
                                 .onAppear {
@@ -138,11 +141,11 @@ struct AdminView: View {
                         
                         HStack{
                             Text("1 小時")
-                                .frame(minWidth: 65, alignment: .leading)
                                 .foregroundStyle(Color.accentColor)
                             Spacer()
                             
                             TextField(String(userData.userItemB), text: $editingItemB)
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
                                 .focused($isTextFieldFocusedOnItemB)
                                 .onAppear {
@@ -166,11 +169,11 @@ struct AdminView: View {
                         
                         HStack{
                             Text("整天")
-                                .frame(minWidth: 65, alignment: .leading)
                                 .foregroundStyle(Color.accentColor)
                             Spacer()
                             
                             TextField(String(userData.userItemC), text: $editingItemC)
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
                                 .focused($isTextFieldFocusedOnItemC)
                                 .onAppear {
@@ -192,6 +195,35 @@ struct AdminView: View {
                             }
                         }
                         
+                    }
+                    Section("商店優惠") {
+                        VStack{
+                            HStack{
+                                Text("全面折扣")
+                                    .foregroundColor(Color.accentColor)
+                                Spacer()
+                                TextField("\(String(userData.systemPromo))", text: $editingStorePromo)
+                                    .multilineTextAlignment(.trailing)
+                                    .focused($isTextFieldFocusedOnStorePromo)
+                                    .keyboardType(.decimalPad)
+                                Text("倍")
+                                    .foregroundColor(Color(.systemGray))
+                                
+                                if isTextFieldFocusedOnStorePromo {
+                                    Button(role: .none, action: {
+                                        
+                                        userData.systemPromo = Double(editingStorePromo) ?? 1.0
+                                        
+                                        isTextFieldFocusedOnStorePromo = false
+                                        
+                                    }, label: {
+                                        Text("變更")
+                                    })
+                                    .disabled(editingStorePromo == String(userData.systemPromo))
+                                    .buttonStyle(.borderedProminent)
+                                }
+                            }
+                        }
                     }
                     Section("其他操作"){
                         

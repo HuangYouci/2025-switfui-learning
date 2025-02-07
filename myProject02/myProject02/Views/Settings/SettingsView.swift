@@ -24,7 +24,7 @@ struct SettingsView: View {
                     Text("設定")
                         .font(.largeTitle)
                         .bold()
-                        .padding(20)
+                        .padding()
                     Spacer()
                 }
                 
@@ -35,6 +35,7 @@ struct SettingsView: View {
                                 .foregroundColor(.accentColor)
                             
                             TextField("請輸入顯示名稱", text: $editingName)
+                                .multilineTextAlignment(.trailing)
                                 .focused($isTextFieldFocusedOnName)
                                 .onAppear{
                                     editingName = userData.userName
@@ -90,6 +91,7 @@ struct SettingsView: View {
                 Button("確認", role: .destructive){
                     userData.setScore(0)
                     userData.setName("用戶")
+                    userData.setItem(a: 0, b: 0, c: 0)
                     editingName = "用戶"
                 }
                 Button("取消", role: .cancel){

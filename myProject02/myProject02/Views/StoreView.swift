@@ -93,34 +93,54 @@ struct StoreView: View {
                 
                 ScrollView{
                     
-                    if Constants.PROMOTION != 1.0 {
+                    if userData.systemPromo < 1.0 {
                         HStack{
-                            Text("現正進行 \(String(format: "%.1f",(Constants.PROMOTION * 10))) 折促銷！")
+                            Text("現正進行 \(String(format: "%.1f",(userData.systemPromo * 10))) 折促銷！")
+                                .foregroundColor(Color(.white))
                                 .padding(.horizontal)
                                 .padding(.vertical, 5)
                         }
-                        .background(Color.red.opacity(0.5))
+                        .background(Color.red)
+                        .cornerRadius(20)
+                        .padding(.bottom, 20)
+                    } else if userData.systemPromo > 1.0 {
+                        HStack{
+                            Text("目前價格較平常上漲 \(String(format: "%.1f",(userData.systemPromo))) 倍")
+                                .foregroundColor(Color(.white))
+                                .padding(.horizontal)
+                                .padding(.vertical, 5)
+                        }
+                        .background(Color.red)
                         .cornerRadius(20)
                         .padding(.bottom, 20)
                     }
                     
                     HStack{
                         
-                        Text("以 \(Int(Constants.ITEMACOST * Constants.PROMOTION)) 獎勵積分購買 15 分鐘兌換券")
+                        Text("\(Image(systemName: "ticket")) 15 分鐘兌換券")
                             .padding(.leading)
                         
                         Spacer()
                         
+                        if (userData.systemPromo != 1.0){
+                            Text("\(Int(Constants.ITEMACOST))")
+                                .strikethrough(true, color: .accentColor)
+                        }
+                        
+                        Text("\(Int(Constants.ITEMACOST * userData.systemPromo))")
+                        
+                        Text("P")
+                        
                         Button(role: .none){
                             
-                            userData.modifyScore( -Int( (Constants.ITEMACOST * Constants.PROMOTION)) )
+                            userData.modifyScore( -Int( (Constants.ITEMACOST * userData.systemPromo)) )
                             
                             userData.modifyItem(a: 1)
                             
                         } label: {
                             Text("購買")
                         }
-                        .disabled(userData.userScore <= Int( (Constants.ITEMACOST * Constants.PROMOTION)))
+                        .disabled(userData.userScore < Int( (Constants.ITEMACOST * userData.systemPromo)))
                         .buttonStyle(.borderedProminent)
                         .padding(.trailing)
                         
@@ -129,21 +149,30 @@ struct StoreView: View {
                     
                     HStack{
                         
-                        Text("以 \(Int(Constants.ITEMBCOST * Constants.PROMOTION)) 獎勵積分購買 1 小時兌換券")
+                        Text("\(Image(systemName: "ticket")) 1 小時兌換券")
                             .padding(.leading)
                         
                         Spacer()
                         
+                        if (userData.systemPromo != 1.0){
+                            Text("\(Int(Constants.ITEMBCOST))")
+                                .strikethrough(true, color: .accentColor)
+                        }
+                        
+                        Text("\(Int(Constants.ITEMBCOST * userData.systemPromo))")
+                        
+                        Text("P")
+                        
                         Button(role: .none){
                             
-                            userData.modifyScore( -Int( (Constants.ITEMBCOST * Constants.PROMOTION)) )
+                            userData.modifyScore( -Int( (Constants.ITEMBCOST * userData.systemPromo)) )
                             
                             userData.modifyItem(b: 1)
                             
                         } label: {
                             Text("購買")
                         }
-                        .disabled(userData.userScore <= Int( (Constants.ITEMBCOST * Constants.PROMOTION)))
+                        .disabled(userData.userScore < Int( (Constants.ITEMBCOST * userData.systemPromo)))
                         .buttonStyle(.borderedProminent)
                         .padding(.trailing)
                         
@@ -152,21 +181,30 @@ struct StoreView: View {
                     
                     HStack{
                         
-                        Text("以 \(Int(Constants.ITEMCCOST * Constants.PROMOTION)) 獎勵積分購買整天兌換券")
+                        Text("\(Image(systemName: "ticket")) 整天兌換券")
                             .padding(.leading)
                         
                         Spacer()
                         
+                        if (userData.systemPromo != 1.0){
+                            Text("\(Int(Constants.ITEMCCOST))")
+                                .strikethrough(true, color: .accentColor)
+                        }
+                        
+                        Text("\(Int(Constants.ITEMCCOST * userData.systemPromo))")
+                        
+                        Text("P")
+                        
                         Button(role: .none){
                             
-                            userData.modifyScore( -Int( (Constants.ITEMCCOST * Constants.PROMOTION)) )
+                            userData.modifyScore( -Int( (Constants.ITEMCCOST * userData.systemPromo)) )
                             
                             userData.modifyItem(c: 1)
                             
                         } label: {
                             Text("購買")
                         }
-                        .disabled(userData.userScore <= Int( (Constants.ITEMCCOST * Constants.PROMOTION)))
+                        .disabled(userData.userScore < Int( (Constants.ITEMCCOST * userData.systemPromo)))
                         .buttonStyle(.borderedProminent)
                         .padding(.trailing)
                         
