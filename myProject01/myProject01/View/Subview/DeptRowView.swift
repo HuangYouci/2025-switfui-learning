@@ -10,6 +10,23 @@ import SwiftUI
 struct DeptRowView: View {
     var department: deptListModel
     
+    @EnvironmentObject var data: Data
+    
+    private var isPassed: Bool {
+        deptListFunc.checkTestPassed(
+            CH: department.chineseTest,
+            EN: department.englishTest,
+            MA: department.mathATest,
+            MB: department.mathBTest,
+            SC: department.scienceTest,
+            SO: department.socialTest,
+            EL: department.englishListeningTest,
+            data: data,
+            PC: department.programmingConceptTest,
+            PP: department.programmingPracticalTest
+        )
+    }
+    
     var body: some View {
         VStack {
             HStack{
@@ -31,6 +48,7 @@ struct DeptRowView: View {
             }
         }
         .padding(10)
+        .background(isPassed ? Color(.clear) : Color.red.opacity(0.1))
         .background(Color(.quaternarySystemFill))
         .cornerRadius(10)
     }

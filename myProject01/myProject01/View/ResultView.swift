@@ -122,7 +122,7 @@ struct ResultView : View {
                 HStack{
                     Image(systemName: "checkmark.seal.fill")
                         .opacity(0.5)
-                    Text("通過篩選的科系")
+                    Text("通過檢定的科系")
                         .opacity(0.5)
                     
                     Spacer()
