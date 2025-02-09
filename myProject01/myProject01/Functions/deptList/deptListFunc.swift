@@ -17,7 +17,7 @@ class deptListFunc {
 
     /// 確認檢定有無通過？輸入科目的篩選標準以及用戶資料「data」
     
-    static func checkTestPassed(CH: String = "--", EN: String = "--", MA: String = "--", MB: String = "--", SC: String = "--", SO: String = "--", EL: String = "--", data: Data) -> Bool {
+    static func checkTestPassed(CH: String = "--", EN: String = "--", MA: String = "--", MB: String = "--", SC: String = "--", SO: String = "--", EL: String = "--", data: Data, PC: String = "--", PP: String = "--") -> Bool {
     // 設定對應級分的變數
     var CHLevel = 0
     var ENLevel = 0
@@ -26,6 +26,8 @@ class deptListFunc {
     var SCLevel = 0
     var SOLevel = 0
     var ELLevel = 0
+    var PCLevel = 0
+    var PPLevel = 0
     
     // 根據傳入的標準設定每科的級分
     switch CH {
@@ -128,20 +130,51 @@ class deptListFunc {
     default:
         ELLevel = 4 // 代表不篩選
     }
+        
+    switch PC {
+    case "5級":
+        PCLevel = 5
+    case "4級":
+        PCLevel = 4
+    case "3級":
+        PCLevel = 3
+    case "2級":
+        PCLevel = 2
+    case "1級":
+        PCLevel = 2
+    default:
+        PCLevel = 0
+    }
+        
+    switch PP {
+    case "5級":
+        PPLevel = 5
+    case "4級":
+        PPLevel = 4
+    case "3級":
+        PPLevel = 3
+    case "2級":
+        PPLevel = 2
+    case "1級":
+        PPLevel = 2
+    default:
+        PPLevel = 0
+    }
     
     // 判斷是否通過篩選標準
     return (data.gradeCH >= CHLevel && data.gradeEN >= ENLevel &&
             data.gradeMA >= MALevel && data.gradeMB >= MBLevel &&
             data.gradeSC >= SCLevel && data.gradeSO >= SOLevel &&
-            data.gradeEL <= ELLevel)
+            data.gradeEL <= ELLevel && data.gradePC >= PCLevel &&
+            data.gradePP >= PPLevel)
 }
 
     /// 篩選倍率
     
-    static func sortSubjectsNames(CH: String, EN: String, MA: String, MB: String, SC: String, SO: String, multiple: String) -> [String] {
+    static func sortSubjectsNames(CH: String, EN: String, MA: String, MB: String, SC: String, SO: String, multiple: String, PC: String, PP: String) -> [String] {
         let subjectNames: [String: String] = [
             "CH": "國文", "EN": "英文", "MA": "數Ａ", "MB": "數Ｂ",
-            "SC": "自然", "SO": "社會", "multiple": "組合科目"
+            "SC": "自然", "SO": "社會", "multiple": "組合科目", "PC": "程式設計觀念", "PP": "程式設計實作"
         ]
         
         let scores: [String: Double] = [
@@ -151,7 +184,9 @@ class deptListFunc {
             "MB": Double(MB) ?? (MB == "--" ? 0 : 0),
             "SC": Double(SC) ?? (SC == "--" ? 0 : 0),
             "SO": Double(SO) ?? (SO == "--" ? 0 : 0),
-            "multiple": Double(multiple) ?? (multiple == "--" ? 0 : 0)
+            "multiple": Double(multiple) ?? (multiple == "--" ? 0 : 0),
+            "PC": Double(PC) ?? (PC.isEmpty ? 0 : 0),
+            "PP": Double(PP) ?? (PP.isEmpty ? 0 : 0)
         ]
         
         let sortedScores = scores.filter { $0.value > 0 }.sorted { $0.value > $1.value }
@@ -179,19 +214,30 @@ class deptListFunc {
         return result
     }
     
-    static func sortSubjectsScores(CH: String, EN: String, MA: String, MB: String, SC: String, SO: String, multiple: String) -> [Double] {
-        let scores = [
-            (Double(CH) ?? 0.0),
-            (Double(EN) ?? 0.0),
-            (Double(MA) ?? 0.0),
-            (Double(MB) ?? 0.0),
-            (Double(SC) ?? 0.0),
-            (Double(SO) ?? 0.0),
-            (Double(multiple) ?? 0.0)
+    static func sortSubjectsScores(
+        CH: String, EN: String, MA: String, MB: String, SC: String, SO: String,
+        multiple: String, PC: String, PP: String
+    ) -> [Double] {
+        
+        // 先逐步轉換字串為 Double，確保每一步都明確
+        let convertedScores: [Double] = [
+            Double(CH) ?? 0.0,
+            Double(EN) ?? 0.0,
+            Double(MA) ?? 0.0,
+            Double(MB) ?? 0.0,
+            Double(SC) ?? 0.0,
+            Double(SO) ?? 0.0,
+            Double(multiple) ?? 0.0,
+            Double(PC) ?? 0.0,
+            Double(PP) ?? 0.0
         ]
         
-        let uniqueSortedScores = Array(Set(scores.filter { $0 > 0 })).sorted(by: >)
+        // 過濾掉 0，轉換成 Set 來去除重複，最後進行排序
+        let filteredScores = convertedScores.filter { $0 > 0 }
+        let uniqueSortedScores = Array(Set(filteredScores)).sorted(by: >)
+        
         return uniqueSortedScores
     }
+
     
 }

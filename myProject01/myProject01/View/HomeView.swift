@@ -21,8 +21,8 @@ struct HomeView: View {
     
     @FocusState private var focusField: Field?
     
-    @State private var isScrollable = true
     @State private var isFinishedForm = false
+    @State private var showOtherSubjectView = false
     
     @State private var contentHeight: CGFloat = 0
     
@@ -83,71 +83,49 @@ struct HomeView: View {
                         gradeInputView(label: "社會", grade: $EditingGradeSO, field: .gradeSO)
                     }
                     
-                    
-                    HStack{
-                        
-                        Text("英聽")
-                            .foregroundStyle(Color.accentColor)
+                    HStack {
+                        HStack {
+                            
+                            Text("英聽")
+                                .foregroundStyle(Color.accentColor)
+                            
+                            Spacer()
+                            
+                            Picker(selection: $EditingGradeEL){
+                                Text("A 級").tag("1")
+                                Text("B 級").tag("2")
+                                Text("C 級").tag("3")
+                                Text("F 級 / 未報考").tag("4")
+                            } label : {
+                                Text("英文聽力選擇")
+                            }
+                            .background(Color.clear)
+                            .onAppear {
+                                EditingGradeEL = String(data.gradeEL)
+                            }
+                            
+                            
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .padding(5)
+                        .padding(.horizontal, 5)
+                        .background(Color(.quaternarySystemFill))
+                        .cornerRadius(10)
                         
                         Spacer()
                         
-                        Picker(selection: $EditingGradeEL){
-                            Text("A 級").tag("1")
-                            Text("B 級").tag("2")
-                            Text("C 級").tag("3")
-                            Text("F 級 / 未報考").tag("4")
-                        } label : {
-                            Text("英文聽力選擇")
+                        Button(role: .none){
+                            showOtherSubjectView = true
+                        } label: {
+                            Text("其他科目")
+                                .padding(5)
                         }
-                        .background(Color.clear)
-                        .onAppear {
-                            EditingGradeEL = String(data.gradeEL)
-                        }
+                        .buttonStyle(.borderedProminent)
                         
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding(5)
-                    .padding(.horizontal, 5)
-                    .background(Color(.quaternarySystemFill))
-                    .cornerRadius(10)
                     
                 }
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        
-                        Button {
-                            
-                            switch focusField {
-                                case .gradeCH:
-                                    focusField = .gradeEN
-                                case .gradeEN:
-                                    focusField = .gradeMA
-                                case .gradeMA:
-                                    focusField = .gradeMB
-                                case .gradeMB:
-                                    focusField = .gradeSC
-                                case .gradeSC:
-                                    focusField = .gradeSO
-                                case .gradeSO:
-                                    focusField = nil
-                            case .none:
-                                focusField = nil
-                            }
-                            
-                        } label: {
-                            Text("下一格")
-                                .foregroundColor(.accentColor)
-                            Image(systemName: "arrow.forward")
-                        }
-                        
-                        Button {
-                            focusField = nil
-                        } label: {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                        }
-                        
-                    }
-                }
+                
             }
                 
             if isFinishedForm {
@@ -208,8 +186,47 @@ struct HomeView: View {
             
         }
         .padding()
+        .sheet(isPresented: $showOtherSubjectView){
+            OtherSubjectChooseView(show: $showOtherSubjectView)
+        }
         .onAppear{
             isFinishedForm = false
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                
+                Button {
+                    
+                    switch focusField {
+                        case .gradeCH:
+                            focusField = .gradeEN
+                        case .gradeEN:
+                            focusField = .gradeMA
+                        case .gradeMA:
+                            focusField = .gradeMB
+                        case .gradeMB:
+                            focusField = .gradeSC
+                        case .gradeSC:
+                            focusField = .gradeSO
+                        case .gradeSO:
+                            focusField = nil
+                    case .none:
+                        focusField = nil
+                    }
+                    
+                } label: {
+                    Text("下一格")
+                        .foregroundColor(.accentColor)
+                    Image(systemName: "arrow.forward")
+                }
+                
+                Button {
+                    focusField = nil
+                } label: {
+                    Image(systemName: "keyboard.chevron.compact.down")
+                }
+                
+            }
         }
     }
     
@@ -217,7 +234,7 @@ struct HomeView: View {
             return HStack {
                 Text(label)
                     .foregroundColor(.accentColor)
-                TextField("0 至 15 級分", text: grade)
+                TextField("0 至 15", text: grade)
                     .multilineTextAlignment(.trailing)
                     .keyboardType(.numberPad)
                     .focused($focusField, equals: field)
@@ -258,6 +275,8 @@ struct HomeView: View {
                             focusField = nil
                         }
                     }
+                Text("級")
+                    .foregroundColor(Color(.systemGray2))
             }
             .padding(10)
             .background(Color(.quaternarySystemFill))
