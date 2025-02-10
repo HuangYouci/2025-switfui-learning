@@ -449,7 +449,7 @@ class deptListFunc {
         }
         
         if chance > 1 { return 1.00 }
-        if chance < 0 { return 0.01 }
+        if chance <= 0 { return 0.01 }
         
         return chance
     }

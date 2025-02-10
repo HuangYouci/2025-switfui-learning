@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct DeptGroup: Identifiable {
-    let id = UUID()
-    let title: String
-    let departments: [deptListModel]
-}
 
 struct ResultView : View {
     
@@ -141,7 +136,7 @@ struct ResultView : View {
                     LazyVStack {
                         
                         ForEach(filiteredDept) { dept in
-                            NavigationLink(destination: DeptDetailView(department: dept, displayMore: true)) {
+                            NavigationLink(destination: DeptDetailView(department: dept)) {
                                 DeptRowView(department: dept)
                             }
                             .buttonStyle(PlainButtonStyle())

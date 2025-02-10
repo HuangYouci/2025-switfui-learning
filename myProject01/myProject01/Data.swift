@@ -105,6 +105,12 @@ class Data: ObservableObject {
         }
     }
     
+    @Published var displayMore: Int {
+        didSet {
+            UserDefaults.standard.set(displayMore, forKey: "displayMore")
+        }
+    }
+    
     
     @Published var gradeTotal1: Int = 0
     @Published var gradeTotal2: Int = 0
@@ -128,6 +134,7 @@ class Data: ObservableObject {
         self.gradeSK4 = UserDefaults.standard.integer(forKey: "gradeSK4")
         self.gradeSK5 = UserDefaults.standard.integer(forKey: "gradeSK5")
         self.gradeSKT = UserDefaults.standard.integer(forKey: "gradeSKT")
+        self.displayMore = UserDefaults.standard.integer(forKey: "displayMore")
         // 計算總分
         updateTotal()
     }
