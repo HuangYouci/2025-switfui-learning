@@ -14,7 +14,15 @@ struct DeptDetailView: View {
     @State private var isShowSheet = false
     @State var sheetExplansion: String?
     
+    // 傳入資料
     var department: deptListModel
+    var displayMore: Bool
+    
+    // 初始資料
+    init(department: deptListModel, displayMore: Bool = false) {
+        self.department = department
+        self.displayMore = displayMore
+    }
     
     var body: some View {
         
@@ -23,6 +31,8 @@ struct DeptDetailView: View {
                 (Int(department.outlyingIslandAdditionalQuota) ?? 0) +
                 (Int(department.visionProgramAdditionalQuota) ?? 0)
             }
+        
+        let calPassChance = deptListFunc.calPassChance(testResult: department.testResult, data: Data())
         
         VStack {
             HStack{
@@ -174,6 +184,16 @@ struct DeptDetailView: View {
                         Image(systemName: "doc.text.magnifyingglass")
                         Text("第一階段檢定")
                         Spacer()
+                        
+                        if displayMore && deptListFunc.checkTestPassed(CH: department.chineseTest, EN: department.englishTest, MA: department.mathATest, MB: department.mathBTest, SC: department.scienceTest, SO: department.socialTest, EL: department.englishListeningTest, data: Data(), PC: department.programmingConceptTest, PP: department.programmingPracticalTest) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .bold()
+                                .foregroundColor(Color.green)
+                                .padding(.trailing, -5)
+                            Text("檢定通過")
+                                .bold()
+                        }
+                        
                     }
                     .bold()
                     .padding(.bottom, 10)
@@ -292,6 +312,55 @@ struct DeptDetailView: View {
                                 if ( !department.practicalExamItem5Test.isEmpty ) { Text(department.practicalExamItem5Test)
                                 }
                                 Spacer()
+                            }
+                            if displayMore {
+                                GridRow {
+                                    Text("你的")
+                                        .bold()
+                                    if (department.chineseTest != "--") { Text(deptListFunc.getFiveStandard(for: "CH", grade: data.gradeCH))
+                                            .foregroundColor(deptListFunc.checkTestPassed(CH: department.chineseTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.englishTest != "--") {
+                                        Text(deptListFunc.getFiveStandard(for: "EN", grade: data.gradeEN))
+                                            .foregroundColor(deptListFunc.checkTestPassed(EN: department.englishTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.mathATest != "--") {
+                                        Text(deptListFunc.getFiveStandard(for: "MA", grade: data.gradeMA))
+                                            .foregroundColor(deptListFunc.checkTestPassed(MA: department.mathATest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.mathBTest != "--") {
+                                        Text(deptListFunc.getFiveStandard(for: "MB", grade: data.gradeMB))
+                                            .foregroundColor(deptListFunc.checkTestPassed(MB: department.mathBTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.scienceTest != "--") {
+                                        Text(deptListFunc.getFiveStandard(for: "SC", grade: data.gradeSC))
+                                            .foregroundColor(deptListFunc.checkTestPassed(SC: department.scienceTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.socialTest != "--") {
+                                        Text(deptListFunc.getFiveStandard(for: "SO", grade: data.gradeSO))
+                                            .foregroundColor(deptListFunc.checkTestPassed(SO: department.socialTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if (department.englishListeningTest != "--") {     Text(data.gradeEL == 3 ? "C級" : (data.gradeEL == 2 ? "B級" : (data.gradeEL == 1 ? "A級" : "F級")))
+                                            .foregroundColor(deptListFunc.checkTestPassed(EL: department.englishTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if ( !department.programmingConceptTest.isEmpty) { Text(data.gradePC + "級")
+                                            .foregroundColor(deptListFunc.checkTestPassed(PC: department.programmingConceptTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if ( !department.programmingPracticalTest.isEmpty ) { Text(data.gradePP + "級")
+                                            .foregroundColor(deptListFunc.checkTestPassed(PP: department.programmingPracticalTest, data: Data()) ? Color.green : Color.red)
+                                    }
+                                    if ( !department.practicalExamItem1Test.isEmpty ) { Text(department.practicalExamItem1Test)
+                                    }
+                                    if ( !department.practicalExamItem2Test.isEmpty ) { Text(department.practicalExamItem2Test)
+                                    }
+                                    if ( !department.practicalExamItem3Test.isEmpty ) { Text(department.practicalExamItem3Test)
+                                    }
+                                    if ( !department.practicalExamItem4Test.isEmpty ) { Text(department.practicalExamItem4Test)
+                                    }
+                                    if ( !department.practicalExamItem5Test.isEmpty ) { Text(department.practicalExamItem5Test)
+                                    }
+                                    Spacer()
+                                }
                             }
                         }
                     }
@@ -767,6 +836,17 @@ struct DeptDetailView: View {
                     
                     Text(department.remarks)
                     
+                }
+                .padding()
+                .background(Color(.quaternarySystemFill))
+                .cornerRadius(10)
+                .padding(5)
+                
+                VStack(spacing: 0){
+                    HStack{
+                        Text("本系統計算的錄取機率為")
+                        Text("\(String(format: "%.0f", calPassChance * 100)) %")
+                    }
                 }
                 .padding()
                 .background(Color(.quaternarySystemFill))

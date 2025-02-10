@@ -8,6 +8,7 @@
 struct deptListModel: Identifiable {
     var id: String { departmentCode }  // 假設學校代碼是唯一的
     var fullName: String { schoolName + departmentName }
+    // CSS File
     var schoolCode: String
     var schoolName: String
     var departmentCode: String
