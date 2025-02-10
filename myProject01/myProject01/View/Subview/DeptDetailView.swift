@@ -17,6 +17,13 @@ struct DeptDetailView: View {
     var department: deptListModel
     
     var body: some View {
+        
+        var totalAdditionalQuota: Int {
+                (Int(department.indigenousAdditionalQuota) ?? 0) +
+                (Int(department.outlyingIslandAdditionalQuota) ?? 0) +
+                (Int(department.visionProgramAdditionalQuota) ?? 0)
+            }
+        
         VStack {
             HStack{
                 
@@ -105,19 +112,15 @@ struct DeptDetailView: View {
                         .foregroundColor(Color(.darkGray))
                     }
                     
-                    HStack{
-                        Text("外加名額")
-                        Spacer()
-                        
-                        var totalAdditionalQuota: Int {
-                                (Int(department.indigenousAdditionalQuota) ?? 0) +
-                                (Int(department.outlyingIslandAdditionalQuota) ?? 0) +
-                                (Int(department.visionProgramAdditionalQuota) ?? 0)
-                            }
-                        Text("共")
-                        Text("\(totalAdditionalQuota)")
-                            .bold()
-                        Text("人")
+                    if totalAdditionalQuota > 0 {
+                        HStack{
+                            Text("外加名額")
+                            Spacer()
+                            Text("共")
+                            Text("\(totalAdditionalQuota)")
+                                .bold()
+                            Text("人")
+                        }
                     }
                     
                     if ( Int(department.indigenousAdditionalQuota) ?? 0 > 0 ) {
@@ -168,12 +171,16 @@ struct DeptDetailView: View {
                 
                 VStack(spacing: 0){
                     HStack{
-                        Image(systemName: "checkmark.circle")
+                        Image(systemName: "doc.text.magnifyingglass")
                         Text("第一階段檢定")
                         Spacer()
                     }
                     .bold()
                     .padding(.bottom, 10)
+                    .onTapGesture {
+                        sheetExplansion = "只要通過該系所有第一階段檢定之標的，即可選填該系為志願。填入志願序後，仍需進行第一階段篩選倍率比較。本處會顯示所有檢定項目，包含學測科目、術科科目及程設科目。若檢定沒有科目項目，代表本系未設任何檢定標準。"
+                        isShowSheet = true
+                    }
                     
                     HStack{
                         Grid{
@@ -198,6 +205,58 @@ struct DeptDetailView: View {
                                 }
                                 if (!department.programmingPracticalTest.isEmpty) { Text("程設實作")
                                 }
+                                if (!department.practicalExamItem1Test.isEmpty) {
+                                    switch department.departmentType {
+                                    case "美術":
+                                        Text("素描")
+                                    case "體育":
+                                        Text("體育")
+                                    case "音樂":
+                                        Text("主修")
+                                    default:
+                                        Text("術科項目1")
+                                    }
+                                }
+                                if (!department.practicalExamItem2Test.isEmpty) {
+                                    switch department.departmentType {
+                                    case "美術":
+                                        Text("彩繪技法")
+                                    case "音樂":
+                                        Text("副修")
+                                    default:
+                                        Text("術科項目2")
+                                    }
+                                }
+                                if (!department.practicalExamItem3Test.isEmpty) {
+                                    switch department.departmentType {
+                                    case "美術":
+                                        Text("創意表現")
+                                    case "音樂":
+                                        Text("樂理")
+                                    default:
+                                        Text("術科項目3")
+                                    }
+                                }
+                                if (!department.practicalExamItem4Test.isEmpty) {
+                                    switch department.departmentType {
+                                    case "美術":
+                                        Text("水墨書畫")
+                                    case "音樂":
+                                        Text("視唱")
+                                    default:
+                                        Text("術科項目4")
+                                    }
+                                }
+                                if (!department.practicalExamItem5Test.isEmpty) {
+                                    switch department.departmentType {
+                                    case "美術":
+                                        Text("美術鑒賞")
+                                    case "音樂":
+                                        Text("聽寫")
+                                    default:
+                                        Text("術科項目5")
+                                    }
+                                }
                                 Spacer()
                             }
                             GridRow{
@@ -221,6 +280,16 @@ struct DeptDetailView: View {
                                 if ( !department.programmingConceptTest.isEmpty) { Text(department.programmingConceptTest)
                                 }
                                 if ( !department.programmingPracticalTest.isEmpty ) { Text(department.programmingPracticalTest)
+                                }
+                                if ( !department.practicalExamItem1Test.isEmpty ) { Text(department.practicalExamItem1Test)
+                                }
+                                if ( !department.practicalExamItem2Test.isEmpty ) { Text(department.practicalExamItem2Test)
+                                }
+                                if ( !department.practicalExamItem3Test.isEmpty ) { Text(department.practicalExamItem3Test)
+                                }
+                                if ( !department.practicalExamItem4Test.isEmpty ) { Text(department.practicalExamItem4Test)
+                                }
+                                if ( !department.practicalExamItem5Test.isEmpty ) { Text(department.practicalExamItem5Test)
                                 }
                                 Spacer()
                             }
@@ -316,6 +385,54 @@ struct DeptDetailView: View {
                             }
                             Spacer()
                         }
+                    }
+                    
+                }
+                .padding()
+                .background(Color(.quaternarySystemFill))
+                .cornerRadius(10)
+                .padding(5)
+                
+                VStack(spacing: 0){
+                    
+                    HStack{
+                        Image(systemName: "list.bullet.circle")
+                        Text("第一階段結果")
+                        Spacer()
+                        Text("113年")
+                            .foregroundColor(Color(.systemGray2))
+                    }
+                    .bold()
+                    .padding(.bottom, 10)
+                    
+                    HStack{
+                        Grid {
+                            GridRow{
+                                Text("科目")
+                                    .bold()
+                                
+                                ForEach(0..<TestResultInfoName.count, id: \.self) { index in
+                                    if TestResultInfoName[index] != "無" {
+                                        GridRow {
+                                            Text(TestResultInfoName[index]) // 顯示科目名稱
+                                        }
+                                    }
+                                }
+                            }
+                            GridRow{
+                                Text("級分")
+                                    .bold()
+                                
+                                ForEach(0..<TestResultInfoName.count, id: \.self) { index in
+                                    if TestResultInfoName[index] != "無" {
+                                        GridRow {
+                                            Text(TestResultInfoNumber[index]) // 顯示對應的級分
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Spacer()
                     }
                     
                 }
@@ -471,6 +588,42 @@ struct DeptDetailView: View {
                         Text(department.examFee)
                         Text("元")
                             .foregroundColor(Color(.systemGray2))
+                    }
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                    
+                    HStack{
+                        Text("公告甄試通知")
+                        Spacer()
+                        Text(department.notifyOrAnnounceExam)
+                    }
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                    
+                    HStack{
+                        Text("甄試日期")
+                        Spacer()
+                        Text( !department.examDate1.isEmpty ? department.examDate1 : "點擊查看")
+                    }
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                    .onTapGesture {
+                        sheetExplansion = "甄試日期 1：\(department.examDate1)\n甄試日期 2：\(department.examDate2)\n甄試日期 3：\(department.examDate3)\n甄試日期：\(department.examStartDate) ~ \(department.examEndDate)"
+                        isShowSheet = true
+                    }
+                    
+                    HStack{
+                        Text("榜示日期")
+                        Spacer()
+                        Text(department.announcementDate)
+                    }
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                    
+                    HStack{
+                        Text("審查資料收件截止")
+                        Spacer()
+                        Text(department.documentSubmissionDeadline)
                     }
                     .font(.headline)
                     .padding(.bottom, 5)

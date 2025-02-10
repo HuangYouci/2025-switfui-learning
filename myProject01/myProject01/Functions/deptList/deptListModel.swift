@@ -111,5 +111,5 @@ struct deptListModel: Identifiable {
     var practicalExamItem4ScoreCalculation: String
     var practicalExamItem5ScoreCalculation: String
     var practicalExamScoreRatio: String
-    
+    var testResult: String
 }

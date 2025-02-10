@@ -27,15 +27,18 @@ struct SheetExplansionView: View {
             }
             .padding(.bottom,10)
             
-            Text(explansion ?? "尚未設置")
-                .background(
-                    GeometryReader { geometry in
-                        Color.clear
-                            .onAppear(){
-                                contentHeight = geometry.size.height + 100
-                            }
+            HStack{
+                Text(explansion ?? "尚未設置")
+                    .background(
+                        GeometryReader { geometry in
+                            Color.clear
+                                .onAppear(){
+                                    contentHeight = geometry.size.height + 100
+                                }
                         }
                     )
+                Spacer()
+            }
             
             Spacer()
         }

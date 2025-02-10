@@ -122,7 +122,8 @@ func loadCSVData() -> [deptListModel] {
                 practicalExamItem3ScoreCalculation: row["practicalExamItem3ScoreCalculation"] ?? "",
                 practicalExamItem4ScoreCalculation: row["practicalExamItem4ScoreCalculation"] ?? "",
                 practicalExamItem5ScoreCalculation: row["practicalExamItem5ScoreCalculation"] ?? "",
-                practicalExamScoreRatio: row["practicalExamScoreRatio"] ?? ""
+                practicalExamScoreRatio: row["practicalExamScoreRatio"] ?? "",
+                testResult: row["testResult"] ?? ""
             )
             deptList.append(dept)
         }
