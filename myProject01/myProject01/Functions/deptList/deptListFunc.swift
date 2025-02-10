@@ -15,7 +15,7 @@ class deptListFunc {
         self.data = data
     }
 
-    /// 確認檢定有無通過？輸入科目的篩選標準以及用戶資料「data」
+    // 確認檢定有無通過？輸入科目的篩選標準以及用戶資料「data」
     
     static func checkTestPassed(CH: String = "--", EN: String = "--", MA: String = "--", MB: String = "--", SC: String = "--", SO: String = "--", EL: String = "--", data: Data, PC: String = "--", PP: String = "--") -> Bool {
     // 設定對應級分的變數
@@ -169,7 +169,7 @@ class deptListFunc {
             data.gradePP >= PPLevel)
 }
 
-    /// 篩選倍率
+    // 篩選倍率
     
     static func sortSubjectsNames(CH: String, EN: String, MA: String, MB: String, SC: String, SO: String, multiple: String, PC: String, PP: String) -> [String] {
         let subjectNames: [String: String] = [
@@ -237,6 +237,24 @@ class deptListFunc {
         let uniqueSortedScores = Array(Set(filteredScores)).sorted(by: >)
         
         return uniqueSortedScores
+    }
+    
+    // 轉換篩選結果
+    
+    static func parseTestResult(_ result: String, outputType: Int = 0) -> [String] {
+        if result == "無資料" { return ["無資料"] }
+        return result
+            .replacingOccurrences(of: "--", with: "超額篩選=無")
+            .replacingOccurrences(of: "有", with: "超額篩選=有")
+            .replacingOccurrences(of: "國", with: "國文")
+            .replacingOccurrences(of: "英", with: "英文")
+            .replacingOccurrences(of: "自", with: "自然")
+            .replacingOccurrences(of: "社", with: "社會")
+            .split(separator: "、")
+            .map { value in
+                let parts = value.split(separator: "=", maxSplits: 1).map { String($0) }
+                return parts.indices.contains(outputType) ? parts[outputType] : ""
+            }
     }
     
     /// 下面先放棄XD

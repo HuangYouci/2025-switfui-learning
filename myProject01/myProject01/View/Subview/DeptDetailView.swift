@@ -405,35 +405,33 @@ struct DeptDetailView: View {
                     .bold()
                     .padding(.bottom, 10)
                     
-                    HStack{
-                        Grid {
-                            GridRow{
-                                Text("科目")
-                                    .bold()
-                                
-                                ForEach(0..<TestResultInfoName.count, id: \.self) { index in
-                                    if TestResultInfoName[index] != "無" {
-                                        GridRow {
-                                            Text(TestResultInfoName[index]) // 顯示科目名稱
-                                        }
-                                    }
-                                }
-                            }
-                            GridRow{
-                                Text("級分")
-                                    .bold()
-                                
-                                ForEach(0..<TestResultInfoName.count, id: \.self) { index in
-                                    if TestResultInfoName[index] != "無" {
-                                        GridRow {
-                                            Text(TestResultInfoNumber[index]) // 顯示對應的級分
-                                        }
-                                    }
-                                }
+                    VStack{
+                        
+                        let testResultName = deptListFunc.parseTestResult(department.testResult, outputType: 0)
+                        
+                        let testResultNumber = deptListFunc.parseTestResult(department.testResult, outputType: 1)
+                        
+                        HStack{
+                            Text("科目 (組合)")
+                            Spacer()
+                            Text("級分")
+                        }
+                        .bold()
+                        
+                        ForEach(Array(zip(testResultName, testResultNumber)), id: \.0) { name, number in
+                            HStack {
+                                Text(name)
+                                Spacer()
+                                Text(number)
                             }
                         }
-                        Spacer()
+                        
                     }
+                    .padding(.bottom, 10)
+                    
+                    Text("請注意可能的篩選變更（本系統未進行檢查）")
+                        .foregroundColor(Color(.systemGray2))
+                        .font(.caption)
                     
                 }
                 .padding()

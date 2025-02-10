@@ -72,7 +72,7 @@ struct HomeView: View {
                     
                     HStack{
                         gradeInputView(label: "國文", grade: $EditingGradeCH, field: .gradeCH)
-                        gradeInputView(label: "英語", grade: $EditingGradeEN, field: .gradeEN)
+                        gradeInputView(label: "英文", grade: $EditingGradeEN, field: .gradeEN)
                     }
                     HStack{
                         gradeInputView(label: "數Ａ", grade: $EditingGradeMA, field: .gradeMA)

@@ -92,11 +92,12 @@
 				};
 			};
 			buildConfigurationList = 7332E6F82D4536F50013FE4B /* Build configuration list for PBXProject "myProject01" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hant";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = 7332E6F42D4536F50013FE4B;
 			minimizedProjectReferenceProxies = 1;

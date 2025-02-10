@@ -45,8 +45,15 @@ struct AllListView: View {
                 HStack{
                     Image(systemName: "list.dash")
                         .opacity(0.5)
-                    Text("校系資料" + " (共" + deptList.count.description + "個校系)")
-                        .opacity(0.5)
+                    
+                    if searchText.isEmpty {
+                        Text("校系資料" + " (共" + deptList.count.description + "個校系)")
+                            .opacity(0.5)
+                    } else {
+                        Text("搜尋「" + searchText + "」 (已篩選出" + filteredDeptList.count.description + "個校系)")
+                            .lineLimit(2)
+                            .opacity(0.5)
+                    }
                     
                     Spacer()
                 }
