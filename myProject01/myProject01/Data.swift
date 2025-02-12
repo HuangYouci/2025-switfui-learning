@@ -151,4 +151,10 @@ class Data: ObservableObject {
         return ((CH ? gradeCH : 0 ) + (MA ? gradeMA : 0 ) + (MB ? gradeMB : 0 ) + (SC ? gradeSC : 0 ) + (SO ? gradeSO : 0 ) + (EN ? gradeEN : 0 ))
     }
     
+    func resetUserDefaults() {
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
+    }
+    
 }

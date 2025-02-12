@@ -345,25 +345,26 @@ class deptListFunc {
     /// 傳入篩選資料，以「科目+科目=分數、科目=分數、有/--」或是「無資料」的方式傳入
     
     static func parseTestResult(_ result: String, outputType: Int = 0) -> [String] {
-        if result == "無資料" { return ["無資料"] }
-        return result
-            .replacingOccurrences(of: "--", with: "超額篩選=無")
-            .replacingOccurrences(of: "有", with: "超額篩選=有")
-            .replacingOccurrences(of: "國", with: "國文")
-            .replacingOccurrences(of: "英", with: "英文")
-            .replacingOccurrences(of: "自", with: "自然")
-            .replacingOccurrences(of: "社", with: "社會")
-            .split(separator: "、")
-            .map { value in
-                let parts = value.split(separator: "=", maxSplits: 1).map { String($0) }
-                return parts.indices.contains(outputType) ? parts[outputType] : ""
-            }
-    }
+            if result == "無資料" { return ["無資料"] }
+            return result
+                .replacingOccurrences(of: "--", with: "超額篩選=無")
+                .replacingOccurrences(of: "有", with: "超額篩選=有")
+                .replacingOccurrences(of: "國", with: "國文")
+                .replacingOccurrences(of: "英", with: "英文")
+                .replacingOccurrences(of: "自", with: "自然")
+                .replacingOccurrences(of: "社", with: "社會")
+                .split(separator: "、")
+                .map { value in
+                    let parts = value.split(separator: "=", maxSplits: 1).map { String($0) }
+                    return parts.indices.contains(outputType) ? parts[outputType] : ""
+                }
+        }
+
     
     /// 落點分析
     /// 傳入篩選結果和使用者資料 Data()，倍數目前尚未實裝
     
-    static func calPassChance(testResult: String = "--", data: Data, timesCH: String = "0", timesEN: String = "0", timesMA: String = "0", timesMB: String = "0", timesSC: String = "0", timesSO: String = "0", timesMultiple: String = "0") -> Double {
+    static func calPassChance(testResult: String = "--", data: Data) -> Double {
         
         if testResult == "無資料" { return 0.00 }
         
@@ -376,10 +377,10 @@ class deptListFunc {
         
         for (subject, value) in parseTestResult {
             
-            chance *= (1+(chance - 0.5))
+            if chance > 0.5 { chance = 0.5+((chance - 0.5)*0.7) }
             
             /// 如果有下回合就讓上回合的影響變小
-            /// 和 50% 的差距的 50%
+            /// 只有當：chance > 0.5 時，才和 50% 的差距的 70%
             
             calDiff = 0
             calSubCount = 0
@@ -407,6 +408,11 @@ class deptListFunc {
                 
             }
             
+            if (calDiff == (calSubCount * 15)) { chance *= 1.9 }
+            
+            /// 在此 calDiff 還沒扣掉結果分數，是使用者原本的分數
+            /// 如果使用者原本分數是滿級分，則機率直接 +90%
+            
             calDiff -= ( Int(value) ?? 0 )
             
             /// calDiff 為 某一科目組合 使用者與去年結果的差距 (正為使用者多)
@@ -416,13 +422,15 @@ class deptListFunc {
             /// 倍數越多越有利（倍數先不實作）
             
             calDiffDivSubCount = Double(calDiff) / Double(calSubCount)
-            calDiffDivSubCount *= (1 + 0.5 * Double(calSubCount)) // 暫時的
+            calDiffDivSubCount *= (1 + 0.7 * Double(calSubCount)) // 暫時的
             
             /// chance 機率實作
             /// calDiffDivSubCount 是 平均每科目差級分
             
             switch calDiffDivSubCount {
-            case 4...:
+            case 5...:
+                chance *= 1.60 // +60%
+            case 4..<5:
                 chance *= 1.50 // +50%
             case 3..<4:
                 chance *= 1.30  // +30%
@@ -442,9 +450,13 @@ class deptListFunc {
                 chance *= 0.85  // -15%
             case -4..<(-3):
                 chance *= 0.70 // -30%
+            case -5..<(-4):
+                chance *= 0.50 // -50%
             default:
-                chance *= 0.50  // -50%
+                chance *= 0.40  // -60%
             }
+            
+            // print("計算 \(subject) 科之後的機率是 \(chance)")
             
         }
         

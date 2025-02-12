@@ -15,8 +15,8 @@ struct DeptDetailView: View {
     // 用戶成績資料
     @EnvironmentObject var data: Data
     // 顯示解釋資料
-    @State private var isShowSheet = false
-    @State var sheetExplansion: String?
+//    @State private var isShowSheet = false
+//    @State var sheetExplansion: String?
     
     var body: some View {
         

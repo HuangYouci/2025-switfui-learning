@@ -45,6 +45,7 @@ struct FirstStageResultView: View {
                 }
                 .bold()
                 
+                    
                 ForEach(Array(zip(testResultName, testResultNumber)), id: \.0) { name, number in
                     HStack {
                         Text(name)
@@ -52,6 +53,7 @@ struct FirstStageResultView: View {
                         Text(number)
                     }
                 }
+                    
                 
             }
             .padding(.bottom, 10)

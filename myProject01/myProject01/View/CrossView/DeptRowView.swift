@@ -51,5 +51,10 @@ struct DeptRowView: View {
         .background(isPassed ? Color(.clear) : Color.red.opacity(0.1))
         .background(Color(.quaternarySystemFill))
         .cornerRadius(10)
+        .contextMenu{
+            ShareLink(item: "我看上了 \(department.fullName) [\(department.id)]！共有 \(department.enrollmentQuota) 名額，快到「學測個申分析系統」搜尋科系 ID「\(department.id)」來查看詳細資料。") {
+                Label("分享", systemImage: "square.and.arrow.up")
+            }
+        }
     }
 }

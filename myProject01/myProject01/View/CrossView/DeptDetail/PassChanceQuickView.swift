@@ -34,7 +34,7 @@ struct PassChanceQuickView: View {
                 
                 if calPassChancePercent >= 80 {
                     
-                    Text("保底志願" + String(calPassChancePercent)+"%")
+                    Text("保底志願")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -52,7 +52,7 @@ struct PassChanceQuickView: View {
                     
                 } else if calPassChancePercent >= 60 {
                     
-                    Text("安全志願" + String(calPassChancePercent)+"%")
+                    Text("安全志願")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -70,7 +70,7 @@ struct PassChanceQuickView: View {
                     
                 } else if calPassChancePercent >= 40 {
                     
-                    Text("一般志願" + String(calPassChancePercent)+"%")
+                    Text("一般志願")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -88,7 +88,7 @@ struct PassChanceQuickView: View {
                     
                 } else if calPassChancePercent >= 20 {
                     
-                    Text("進攻志願" + String(calPassChancePercent)+"%")
+                    Text("進攻志願")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -106,7 +106,7 @@ struct PassChanceQuickView: View {
                     
                 } else if calPassChancePercent > 0 {
                     
-                    Text("夢幻志願" + String(calPassChancePercent)+"%")
+                    Text("夢幻志願")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()

@@ -86,6 +86,9 @@ struct AboutView: View {
                             .onChange(of: editingDisplayMore){
                                 data.displayMore = editingDisplayMore ? 1 : 0
                             }
+                            .onAppear(){
+                                editingDisplayMore = ( data.displayMore == 1 )
+                            }
                         
                     }
                 }
@@ -175,14 +178,7 @@ struct AboutView: View {
         .confirmationDialog("確定要清除所有資料嗎？", isPresented: $showDeleteConfirmation, titleVisibility: .visible) {
             
             Button("確認刪除", role: .destructive){
-                data.gradeCH = 0
-                data.gradeEN = 0
-                data.gradeMA = 0
-                data.gradeSO = 0
-                data.gradeSC = 0
-                data.gradeMB = 0
-                data.gradeEL = 0
-                data.username = "用戶"
+                data.resetUserDefaults()
                 selectedTab = 0
             }
             Button("取消", role: .cancel){
@@ -190,7 +186,7 @@ struct AboutView: View {
             }
             
         } message: {
-            Text("此操作會刪除您的成績資料與分析結果。\n清除後將返回主畫面")
+            Text("此操作會刪除您的成績資料與分析結果。\n清除後將返回主畫面，部分內容需要重新啟動程式才會生效。")
         }
         
         
