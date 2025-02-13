@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="TrainSchedule" representedClassName="TrainSchedule" syncable="YES" codeGenerationType="class">
+        <attribute name="effectiveDate" optional="YES" attributeType="String"/>
+        <attribute name="expireDate" optional="YES" attributeType="String"/>
+        <attribute name="srcUpdateInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="srcUpdateTime" optional="YES" attributeType="String"/>
+        <attribute name="srcVersion" optional="YES" attributeType="String"/>
+        <attribute name="timetableName" optional="YES" attributeType="String"/>
+        <attribute name="updateInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="String"/>
+        <attribute name="validityDescription" optional="YES" attributeType="String"/>
+        <relationship name="trainTimetables" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainTimetable" inverseName="schedule" inverseEntity="TrainTimetable"/>
+    </entity>
+    
+    <entity name="TrainTimetable" representedClassName="TrainTimetable" syncable="YES" codeGenerationType="class">
+        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainSchedule" inverseName="trainTimetables" inverseEntity="TrainSchedule"/>
+        <relationship name="serviceDay" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ServiceDay" inverseName="timetable" inverseEntity="ServiceDay"/>
+        <relationship name="stopTimes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StopTime" inverseName="timetable" inverseEntity="StopTime"/>
+        <relationship name="trainInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TrainInfo" inverseName="timetable" inverseEntity="TrainInfo"/>
+    </entity>
+    
+    <entity name="TrainInfo" representedClassName="TrainInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="bikeFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="breastFeedFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="carFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dailyFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="direction" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="diningFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endingStationEn" optional="YES" attributeType="String"/>
+        <attribute name="endingStationID" optional="YES" attributeType="String"/>
+        <attribute name="endingStationZhTw" optional="YES" attributeType="String"/>
+        <attribute name="extraTrainFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="overNightStationID" optional="YES" attributeType="String"/>
+        <attribute name="packageServiceFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="routeID" optional="YES" attributeType="String"/>
+        <attribute name="startingStationEn" optional="YES" attributeType="String"/>
+        <attribute name="startingStationID" optional="YES" attributeType="String"/>
+        <attribute name="startingStationZhTw" optional="YES" attributeType="String"/>
+        <attribute name="trainNo" optional="YES" attributeType="String"/>
+        <attribute name="trainTypeCode" optional="YES" attributeType="String"/>
+        <attribute name="trainTypeEn" optional="YES" attributeType="String"/>
+        <attribute name="trainTypeID" optional="YES" attributeType="String"/>
+        <attribute name="trainTypeZhTw" optional="YES" attributeType="String"/>
+        <attribute name="tripHeadSign" optional="YES" attributeType="String"/>
+        <attribute name="tripLine" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="wheelChairFlag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="timetable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainTimetable" inverseName="trainInfo" inverseEntity="TrainTimetable"/>
+    </entity>
+    
+    <entity name="StopTime" representedClassName="StopTime" syncable="YES" codeGenerationType="class">
+        <attribute name="arrivalTime" optional="YES" attributeType="String"/>
+        <attribute name="departureTime" optional="YES" attributeType="String"/>
+        <attribute name="stationEn" optional="YES" attributeType="String"/>
+        <attribute name="stationID" optional="YES" attributeType="String"/>
+        <attribute name="stationZhTw" optional="YES" attributeType="String"/>
+        <attribute name="stopSequence" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="timetable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainTimetable" inverseName="stopTimes" inverseEntity="TrainTimetable"/>
+    </entity>
+    
+    <entity name="ServiceDay" representedClassName="ServiceDay" syncable="YES" codeGenerationType="class">
+        <attribute name="dayAfterHoliday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dayBeforeHoliday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="friday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="monday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nationalHolidays" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="saturday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="serviceTag" optional="YES" attributeType="String"/>
+        <attribute name="sunday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="thursday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tuesday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="typhoonDay" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="wednesday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="timetable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainTimetable" inverseName="serviceDay" inverseEntity="TrainTimetable"/>
+    </entity>
+</model>
