@@ -9,25 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @EnvironmentObject var userDef: UserDef
+    
+    @State private var isLoggedIn = false
     
     var body: some View {
-        TabView{
-            MainView()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                }
-            StoreView()
-                .tabItem{
-                    Image(systemName: "cart.fill")
-                }
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape.fill")
-                }
+            
+        if isLoggedIn {
+            MainView(isLoggedIn: $isLoggedIn)
+        } else {
+            LoginView(isLoggedIn: $isLoggedIn)
         }
+        
     }
 }
 
 #Preview {
-    ContentView().environmentObject(DataManager())
+    ContentView()
+        .environmentObject(UserDef())
 }
