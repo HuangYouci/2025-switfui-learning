@@ -200,6 +200,9 @@ struct VoucherView: View{
                 
             }
             .background(Image("bgLogin").opacity(0.3))
+            .onChange(of: useConfirmationSheet) { _ in
+                userInfo.fetchUserData(userId: userDef.uid)
+            }
             .fullScreenCover(isPresented: $useConfirmationSheet) {
                 UseConfirmationSheet(useConfirmationSheet: $useConfirmationSheet, itemID: usingItemID)
                     .environmentObject(userInfo)

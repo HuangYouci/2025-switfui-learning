@@ -53,19 +53,32 @@ struct UseConfirmationSheet: View {
                 
                 HStack{
                     
-                    Text(String(itemCount))
-                        .font(.title)
-                        .foregroundColor(Color(.systemGray))
-                    Image(systemName: "arrow.right")
-                    
-                    Text(String(itemCount - 1))
-                        .font(.largeTitle)
-                        .foregroundColor(.accentColor)
-                        .bold()
-                    Text("個")
-                        .foregroundColor(.accentColor)
-                    
-                    Spacer()
+                    if itemCount >= 1 {
+                        
+                        Text(String(itemCount))
+                            .font(.title)
+                            .foregroundColor(Color(.systemGray))
+                        Image(systemName: "arrow.right")
+                        
+                        Text(String(itemCount - 1))
+                            .font(.largeTitle)
+                            .foregroundColor(.accentColor)
+                            .bold()
+                        Text("個")
+                            .foregroundColor(.accentColor)
+                        
+                        Spacer()
+                        
+                    } else {
+                        
+                        Text("0")
+                            .font(.title)
+                            .foregroundColor(Color(.systemGray))
+                        Text("個")
+                            .foregroundColor(Color(.systemGray))
+                        Spacer()
+                        
+                    }
                     
                 }
                 .padding(.bottom, 10)
@@ -92,7 +105,7 @@ struct UseConfirmationSheet: View {
                                 if using > 0 { useConfirmationSheet = false }
                             }
                         } label: {
-                            Text("確認")
+                            Text( itemCount < 1 ? "積分不足" : "確認")
                                 .font(.title2)
                         }
                         .buttonStyle(.borderedProminent)
@@ -113,14 +126,14 @@ struct UseConfirmationSheet: View {
                 
             }
             .padding()
-            .onAppear{
-                updateValue(itemID: itemID)
-            }
             .background(BlurView(style: .systemMaterial))
             .cornerRadius(10)
             .padding()
             
             Spacer()
+        }
+        .onAppear{
+            updateValue(itemID: itemID)
         }
         .ignoresSafeArea(edges: .all)
         .background(Image("bgLogin").opacity(0.3))

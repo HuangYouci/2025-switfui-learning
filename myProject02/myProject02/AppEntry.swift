@@ -30,6 +30,7 @@ struct myProject02App: App {
                 ContentView()
                     .environmentObject(userDef)
             }
+            .navigationViewStyle(.stack)
         }
     }
 }

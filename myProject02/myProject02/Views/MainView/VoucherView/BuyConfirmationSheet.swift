@@ -119,16 +119,16 @@ struct BuyConfirmationSheet: View {
                 
             }
             .padding()
-            .onAppear{
-                balance = userInfo.userPoints
-                updateValue(itemID: itemID)
-            }
             .background(BlurView(style: .systemMaterial))
             .cornerRadius(10)
             .padding()
             
             Spacer()
             
+        }
+        .onAppear{
+            balance = userInfo.userPoints
+            updateValue(itemID: itemID)
         }
         .ignoresSafeArea(edges: .all)
         .background(Image("bgLogin").opacity(0.3))
