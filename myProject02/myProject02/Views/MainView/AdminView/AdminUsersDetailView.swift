@@ -10,17 +10,22 @@ import SwiftUI
 struct AdminUsersDetailView: View {
     
     // 本 VIEW 新增環境變數
+    @StateObject var userData: UserInfo = UserInfo()
     // 繼承環境變數
     // 本 VIEW 綁定變數
     
     @State private var keyboardHeight: CGFloat = 0
 
-    var user: User
+    var uid: String
     
     @State var editingTF1: String = ""
     @State var editingTF2: String = ""
+    @State var editingTF3: String = ""
+    @State var editingTF4: Int = 1
     @State var doneHint: String = ""
+    @State var doneHintTFG2: String = ""
     @State var updateHint: Bool = false
+    @State var updateHintTFG2: Bool = false
 
     var body: some View {
         
@@ -45,10 +50,10 @@ struct AdminUsersDetailView: View {
                 }
                 
                 HStack{
-                    Text(user.userName)
+                    Text(userData.userName)
                         .font(.title)
                         .bold()
-                    if ( true == true ) {
+                    if ( userData.userIsAdmin == true ) {
                         Text("管理員")
                             .foregroundColor(.white)
                             .padding(5)
@@ -64,12 +69,12 @@ struct AdminUsersDetailView: View {
                         .padding(5)
                         .background(Color(.systemGray).opacity(0.1))
                         .cornerRadius(10)
-                    Text(verbatim: user.id)
+                    Text(verbatim: userData.userId)
                     Spacer()
                 }
                 .padding(.bottom)
                 
-                NavigationLink(destination: HistoryView(uid: user.id)){
+                NavigationLink(destination: HistoryView(uid: userData.userId)){
                     VStack{
                         HStack{
                             Text("獎勵積分")
@@ -78,15 +83,10 @@ struct AdminUsersDetailView: View {
                         }
                         HStack{
                             Spacer()
-                            if updateHint {
-                                Text("資料不是最新")
-                                    .font(.body)
-                                    .foregroundColor(Color(.systemGray2))
-                            }
-                            Text(String(user.userPoints))
+                            Text(String(userData.userPoints))
                                 .font(.title)
                                 .bold()
-                                .foregroundColor(updateHint ? Color(.systemGray2) : .accentColor)
+                                .foregroundColor(.accentColor)
                         }
                     }
                     .font(.title3)
@@ -100,7 +100,7 @@ struct AdminUsersDetailView: View {
                     HStack{
                         Text("15分鐘兌換券")
                         Spacer()
-                        Text(String(user.userTime1Voucher))
+                        Text(String(userData.userTime1Voucher))
                             .bold()
                             .foregroundColor(.accentColor)
                     }
@@ -111,7 +111,7 @@ struct AdminUsersDetailView: View {
                     HStack{
                         Text("1小時兌換券")
                         Spacer()
-                        Text(String(user.userTime2Voucher))
+                        Text(String(userData.userTime2Voucher))
                             .bold()
                             .foregroundColor(.accentColor)
                     }
@@ -122,7 +122,7 @@ struct AdminUsersDetailView: View {
                     HStack{
                         Text("整天兌換券")
                         Spacer()
-                        Text(String(user.userTime3Voucher))
+                        Text(String(userData.userTime3Voucher))
                             .bold()
                             .foregroundColor(.accentColor)
                     }
@@ -170,16 +170,73 @@ struct AdminUsersDetailView: View {
                             .foregroundColor(.green)
                         Button(role: .none){
                             if editingTF2.isEmpty { editingTF2 = "無原因" }
-                            changeUserPoints(userId: user.id, pointsChange: (Int(editingTF1) ?? 0), reason: editingTF2)
-                            doneHint = "已異動 \(user.userName) 獎勵積分 \(editingTF1)"
+                            changeUserPoints(userId: userData.userId, pointsChange: (Int(editingTF1) ?? 0), reason: editingTF2)
+                            doneHint = "已異動 \(userData.userName) 獎勵積分 \(editingTF1) 點"
                             updateHint = true
                             editingTF1 = ""
                             editingTF2 = ""
+                            userData.fetchUserData(userId: userData.userId)
                         } label: {
                             Text("執行")
                         }
                         .buttonStyle(.borderedProminent)
                         .disabled(editingTF1.isEmpty)
+                    }
+                    
+                }
+                    .padding(.bottom)
+                
+                VStack{
+                    HStack{
+                        Text("增減時間兌換券")
+                            .font(.title3)
+                            .bold()
+                        Spacer()
+                    }
+                    HStack{
+                        Image(systemName: "number")
+                            .frame(width: 20)
+                        TextField("正負整數", text: $editingTF3)
+                            .keyboardType(.numbersAndPunctuation)
+                            .onChange(of: editingTF3) { newValue in
+                                // 過濾非數字和非 - 符號的字符
+                                let filteredValue = newValue.filter { "0123456789-".contains($0) }
+                                if newValue != filteredValue {
+                                    editingTF3 = filteredValue
+                                }
+                            }
+                    }
+                    
+                    HStack{
+                        Image(systemName: "list.number")
+                            .frame(width: 20)
+                        Picker("選擇", selection: $editingTF4){
+                            Text("15分鐘兌換券")
+                                .tag(1)
+                            Text("1小時兌換券")
+                                .tag(2)
+                            Text("整天兌換券")
+                                .tag(3)
+                        }
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        Spacer()
+                        Text(doneHintTFG2)
+                            .foregroundColor(.green)
+                        Button(role: .none){
+                            changeUserVoucher(userId: userData.userId, itemID: editingTF4, change: Int(editingTF3) ?? 0)
+                            doneHintTFG2 = "已異動 \(userData.userName) 物品 \(editingTF4) \(editingTF3) 個"
+                            updateHintTFG2 = true
+                            editingTF3 = ""
+                            editingTF4 = 1
+                            userData.fetchUserData(userId: userData.userId)
+                        } label: {
+                            Text("執行")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(editingTF3.isEmpty || editingTF4 < 1 )
                     }
                     
                 }
@@ -201,6 +258,9 @@ struct AdminUsersDetailView: View {
             )
             .padding()
             
+        }
+        .onAppear {
+            userData.fetchUserData(userId: uid)
         }
         .background(Image("bgLogin").opacity(0.3).ignoresSafeArea())
         

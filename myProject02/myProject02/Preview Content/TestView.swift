@@ -9,66 +9,78 @@ import SwiftUI
 
 struct TestView: View {
     
-    let itemName: String = "15分鐘時間兌換券"
-    let itemPrice: Int = 100
-    let itemOrigPrice: Int = 1000
-    let balance: Int = 0
+    @State var EditingTF1: String = ""
+    @State var EditingTF2: String = ""
     
     var body: some View {
         
         VStack{
-            HStack{
-                Text("購買確認")
-                    .bold()
-                    .font(.title)
-                Spacer()
-            }
-            .padding(.bottom, 5)
-            HStack{
-                Text("確定要購買")
-                    .foregroundColor(Color(.systemGray))
-                Text(itemName)
-                    .foregroundColor(.accentColor)
-                    .bold()
-                Text("嗎")
-                    .foregroundColor(Color(.systemGray))
-                Spacer()
-            }
-            .font(.title3)
             
-            Divider()
-                .padding(.vertical, 10)
-            
-            HStack{
-                
-                if itemOrigPrice != itemPrice {
-                    Text(String(itemOrigPrice))
-                        .font(.title)
-                        .foregroundColor(Color(.systemGray))
-                        .strikethrough(true, color: .red)
-                    Image(systemName: "arrow.right")
+            VStack{
+                HStack{
+                    Image(systemName: "clock")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(5)
+                        .background(Color(.systemGray).opacity(0.1))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(.systemGray).opacity(0.2), lineWidth: 1)
+                        )
+                    VStack(alignment: .leading){
+                        Text("15分鐘兌換券")
+                        Text("可用於兌換15分鐘獎勵時間")
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.caption)
+                    }
+                    Spacer()
+                    VStack{
+                        Text("shopData.t1s")
+                            .bold()
+                        
+                        Text("原價 shopData.t1o")
+                            .font(.caption)
+                    }
                 }
-                
-                Text(String(itemPrice))
-                    .font(.largeTitle)
-                    .foregroundColor(.accentColor)
-                    .bold()
-                Text("P")
-                    .foregroundColor(.accentColor)
-                
-                Spacer()
-                Button(role: .none){
-                    
-                } label: {
-                    Text("購買")
-                        .font(.title2)
+                Divider()
+                    .padding(.vertical, 5)
+                HStack{
+                    Text("原價")
+                    TextField("正整數", text: $EditingTF1)
+                        .keyboardType(.numberPad)
+                        .onAppear{
+                            // 抓取
+                        }
+                    Spacer()
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(balance < itemPrice)
+                HStack{
+                    Text("售價")
+                    TextField("正整數", text: $EditingTF2)
+                        .keyboardType(.numberPad)
+                        .onAppear{
+                            // 抓取
+                        }
+                }
+                HStack{
+                    Spacer()
+                    Button(role: .none){
+                        //
+                    } label: {
+                        Text("變更")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
             }
-            .padding(.bottom, 10)
+            .padding()
+            .background(Color(.systemGroupedBackground).opacity(0.3))
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color(.systemGray3), lineWidth: 1)
+            )
+            
         }
-        .padding()
         
     }
     

@@ -10,9 +10,9 @@ import Foundation
 
 class deptListFunc {
     
-    var data: Data
+    var data: gradeData
     
-    init(data: Data) {
+    init(data: gradeData) {
         self.data = data
     }
     
@@ -114,7 +114,7 @@ class deptListFunc {
     /// 檢查有無通過所有篩選
     /// 傳入需篩選的科目「標的名稱」以及使用者資料「Data()」，傳出 true / false
     
-    static func checkTestPassed(CH: String = "--", EN: String = "--", MA: String = "--", MB: String = "--", SC: String = "--", SO: String = "--", EL: String = "--", data: Data, PC: String = "--", PP: String = "--") -> Bool {
+    static func checkTestPassed(CH: String = "--", EN: String = "--", MA: String = "--", MB: String = "--", SC: String = "--", SO: String = "--", EL: String = "--", data: gradeData, PC: String = "--", PP: String = "--") -> Bool {
         
     // 設定對應級分的變數
     var CHLevel = 0
@@ -364,7 +364,7 @@ class deptListFunc {
     /// 落點分析
     /// 傳入篩選結果和使用者資料 Data()，倍數目前尚未實裝
     
-    static func calPassChance(testResult: String = "--", data: Data) -> Double {
+    static func calPassChance(testResult: String = "--", data: gradeData) -> Double {
         
         if testResult == "無資料" { return 0.00 }
         

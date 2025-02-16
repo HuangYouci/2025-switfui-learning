@@ -124,20 +124,14 @@ struct HomeView: View {
                     Spacer()
                 }
                 HStack{
-                    Text("建議的事項")
+                    Text("公告")
                         .font(.title3)
                         .bold()
                     Spacer()
                 }
                 .padding(.bottom, 10)
                 
-                if userInfo.userIsAdmin == true {
-                    NavigationLink(destination: AdminView()){
-                        SV01_AdminCanSet() // 管理員設定
-                    }
-                }
-                
-                SV02()
+                AnnouncementView()
                 
             }
             .padding()

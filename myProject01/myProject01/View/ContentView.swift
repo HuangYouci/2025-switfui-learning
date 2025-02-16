@@ -9,8 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var data = Data()
+    // --------------- //
+    // EnvironmentObject
+    // StateObject
+    @EnvironmentObject private var data: UserDef
+    // Binding
+    // State
     @State private var selectedTab = 0
+    // --------------- //
+    
     
     var body: some View {
         TabView(selection: $selectedTab){
@@ -21,7 +28,7 @@ struct ContentView: View {
                 }
                 .tag(0)
             
-            ResultView(selectedTab: $selectedTab)
+            ResultListView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "chart.line.text.clipboard")
                     Text("分析")
@@ -44,8 +51,4 @@ struct ContentView: View {
         }
         .environmentObject(data)
     }
-}
-
-#Preview {
-    ContentView()
 }

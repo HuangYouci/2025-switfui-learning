@@ -17,9 +17,8 @@ struct AdminUsersRowView: View {
     
     var body: some View {
         
-        
         VStack {
-            NavigationLink(destination: AdminUsersDetailView(user: user)){
+            NavigationLink(destination: AdminUsersDetailView(uid: user.id)){
                 HStack{
                     VStack{
                         HStack{

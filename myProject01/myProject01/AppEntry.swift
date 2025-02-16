@@ -10,9 +10,19 @@ import SwiftUI
 @main
 struct myProject01App: App {
     
+    // --------------- //
+    // EnvironmentObject
+    // StateObject
+    @StateObject private var data = UserDef()
+    // Binding
+    // State
+    // --------------- //
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(data)
         }
     }
+    
 }

@@ -18,6 +18,7 @@ class UserInfo: ObservableObject {
     @Published var userTime1Voucher: Int = 0
     @Published var userTime2Voucher: Int = 0
     @Published var userTime3Voucher: Int = 0
+    @Published var userId: String = "0"
     
     func fetchUserData(userId: String) {
         
@@ -41,6 +42,7 @@ class UserInfo: ObservableObject {
                     self.userTime1Voucher = data?["userTime1Voucher"] as? Int ?? 0
                     self.userTime2Voucher = data?["userTime2Voucher"] as? Int ?? 0
                     self.userTime3Voucher = data?["userTime3Voucher"] as? Int ?? 0
+                    self.userId = document.documentID
                     
                     self.loaded = 1
                 }
