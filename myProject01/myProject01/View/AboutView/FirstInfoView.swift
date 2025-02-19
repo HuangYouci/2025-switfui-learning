@@ -263,6 +263,7 @@ struct FirstInfoView: View {
                                     .bold()
                                 Text("使用者可透過觀看廣告來獲得一次落點分析機會，廣告收入將用於支撐本程式的開發與維護。使用者可透過小額購買來贊助開發，並解鎖無限次分析功能。 本程式不對廣告內容負責，若有不適廣告，請向廣告提供商檢舉。")
                                 Text("5. 服務變更、終止與責任限制")
+                                    .bold()
                                 Text("開發者保留隨時修改、暫停或終止本程式服務的權利，無須事先通知。若因技術問題或其他不可抗力因素導致服務中斷，開發者不承擔任何責任。本程式僅供參考，對於使用者因落點分析結果而做出的任何決策，開發者概不負責。本程式的資訊可能因時間推移或官方政策變動而有所不同，使用者應自行查證最新資訊。")
                                 Text("6. 聯絡開發者")
                                     .bold()
@@ -281,17 +282,19 @@ struct FirstInfoView: View {
             }
             .padding()
                 
-            HStack {
-                Button(role: .none){
-                    data.notFirstUse = true
-                } label: {
-                    Spacer()
-                    Text("開始使用")
-                    Spacer()
+            if !data.notFirstUse {
+                HStack {
+                    Button(role: .none){
+                        data.notFirstUse = true
+                    } label: {
+                        Spacer()
+                        Text("開始使用")
+                        Spacer()
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
+                .padding()
             }
-            .padding()
         }
         .padding()
     }
