@@ -11,8 +11,8 @@ struct DeptRowView: View {
     
     // --------------- //
     // EnvironmentObject
+    @EnvironmentObject var data: UserDef
     // StateObject
-    @StateObject private var data = UserDef()
     // Binding
     // State
     // --------------- //

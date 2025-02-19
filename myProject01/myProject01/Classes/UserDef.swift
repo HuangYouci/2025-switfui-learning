@@ -36,6 +36,12 @@ class UserDef: ObservableObject {
         }
     }
     
+    @Published var userpurchased: Bool {
+        didSet {
+            UserDefaults.standard.set(userpurchased, forKey: "userpurchased")
+        }
+    }
+    
     // 分析結果資料
     
     @Published var userResultData: [gradeData] {
@@ -80,16 +86,25 @@ class UserDef: ObservableObject {
         }
     }
     
+    // 開過沒
+    
+    @Published var notFirstUse: Bool {
+        didSet {
+            UserDefaults.standard.set(notFirstUse, forKey: "notFirstUse")
+        }
+    }
     
     // MARK: 初始化
     
     init() {
         // 讀取 UserDefaults 中的值
         self.username = UserDefaults.standard.string(forKey: "username") ?? "用戶"
+        self.userpurchased = UserDefaults.standard.bool(forKey: "userpurchased")
         self.userResultData = Self.loadUserResultData() ?? [gradeData(gradeCH: 11, gradeEN: 14, gradeMA: 7, gradeMB: 11, gradeSC: 12, gradeSO: 11, gradeEL: 1, gradePC: 3, gradePP: 3, gradeSK1: 0, gradeSK2: 0, gradeSK3: 0, gradeSK4: 0, gradeSK5: 0, gradeSKT: 0)]
         self.displayMore = UserDefaults.standard.integer(forKey: "displayMore")
         self.favoriteDept = UserDefaults.standard.array(forKey: "favoriteDept") as? [String] ?? []
         self.analyzeCount = UserDefaults.standard.integer(forKey: "analyzeCount")
+        self.notFirstUse = UserDefaults.standard.bool(forKey: "notFirstUse")
     }
     
     // MARK: Functions

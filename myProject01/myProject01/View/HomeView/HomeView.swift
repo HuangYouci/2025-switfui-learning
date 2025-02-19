@@ -142,7 +142,6 @@ struct HomeView: View {
             }
                 
             if isFinishedForm {
-                Spacer()
                 
                 HStack{
                     Image(systemName: "checkmark.seal.fill")
@@ -152,48 +151,79 @@ struct HomeView: View {
                     
                     Spacer()
                 }
-                .padding(.bottom,10)
+                .padding(.bottom, 5)
                 
-                Text("成績已輸入完成，資料已經新增。快到「分析」結果頁選擇該筆分析結果，查看詳細分析！")
-                    .font(.caption)
-                    .opacity(0.5)
-                    .padding(.bottom,10)
-            }
-            
-            Button(role: .none) {
+                HStack{
+                    Text("成績已輸入完成，資料已經新增。快到「分析」結果頁選擇該筆分析結果，查看詳細分析！")
+                        .font(.caption)
+                        .opacity(0.5)
+                    Spacer()
+                }
                 
-                if isFinishedForm {
+                Button(role: .none) {
                     selectedTab = 1
-                } else {
+                } label : {
+                    Spacer()
+                    
+                    Text("查看分析結果")
+                    
+                    Spacer()
+                }
+                .padding()
+                
+            } else {
+                
+                if data.analyzeCount < 1 {
+                    HStack{
+                        Image(systemName: "exclamationmark.triangle")
+                            .foregroundColor(.red)
+                        Text("分析次數不足")
+                            .foregroundColor(.red)
+                        
+                        Spacer()
+                    }
+                    .padding(.bottom,5)
+                    
+                    HStack{
+                        Text("目前沒有分析次數了，請到「關於」頁面了解如何獲得分析次數")
+                            .font(.caption)
+                            .opacity(0.5)
+                        Spacer()
+                    }
+                }
+                
+                Button(role: .none) {
+                    
                     hideKeyboard()
                     data.addNewResultData(gradeCH: Int(EditingGradeCH) ?? 0 , gradeEN: Int(EditingGradeEN) ?? 0 , gradeMA: Int(EditingGradeMA) ?? 0 , gradeMB: Int(EditingGradeMB) ?? 0 , gradeSC: Int(EditingGradeSC) ?? 0 , gradeSO: Int(EditingGradeSO) ?? 0 , gradeEL: EditingGradeEL, gradePC: EditingGradePC, gradePP: EditingGradePP, gradeSK1: Int(EditingGradeSK1) ?? 0 , gradeSK2: Int(EditingGradeSK2) ?? 0 , gradeSK3: Int(EditingGradeSK3) ?? 0 , gradeSK4: Int(EditingGradeSK4) ?? 0 , gradeSK5: Int(EditingGradeSK5) ?? 0 , gradeSKT: EditingGradeSKT)
                     isFinishedForm = true
                     data.analyzeCount -= 1
+                    
+                } label : {
+                    Spacer()
+                    
+                    Text(data.analyzeCount < 1 ? "分析次數不足" : "提交")
+                    
+                    Spacer()
                 }
+                .clipShape(Capsule())
+                .buttonStyle(.borderedProminent)
+                .disabled(
+                    !isValidGrade(EditingGradeCH) ||
+                    !isValidGrade(EditingGradeMA) ||
+                    !isValidGrade(EditingGradeMB) ||
+                    !isValidGrade(EditingGradeSC) ||
+                    !isValidGrade(EditingGradeSO) ||
+                    !isValidGrade(EditingGradeEN) ||
+                    !isValidGradeSK(EditingGradeSK1) ||
+                    !isValidGradeSK(EditingGradeSK2) ||
+                    !isValidGradeSK(EditingGradeSK3) ||
+                    !isValidGradeSK(EditingGradeSK4) ||
+                    !isValidGradeSK(EditingGradeSK5) || data.analyzeCount < 1
+                )
+                .padding()
                 
-            } label : {
-                Spacer()
-                
-                Text(data.analyzeCount < 1 ? "分析次數不足" : "提交")
-                
-                Spacer()
             }
-            .clipShape(Capsule())
-            .buttonStyle(.borderedProminent)
-            .disabled(
-                !isValidGrade(EditingGradeCH) ||
-                !isValidGrade(EditingGradeMA) ||
-                !isValidGrade(EditingGradeMB) ||
-                !isValidGrade(EditingGradeSC) ||
-                !isValidGrade(EditingGradeSO) ||
-                !isValidGrade(EditingGradeEN) ||
-                !isValidGradeSK(EditingGradeSK1) ||
-                !isValidGradeSK(EditingGradeSK2) ||
-                !isValidGradeSK(EditingGradeSK3) ||
-                !isValidGradeSK(EditingGradeSK4) ||
-                !isValidGradeSK(EditingGradeSK5) || data.analyzeCount < 1
-            )
-            .padding()
             
         }
         .padding()

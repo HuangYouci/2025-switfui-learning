@@ -295,11 +295,11 @@ struct ResultView : View {
                             HStack{
                                 VStack{
                                     HStack{
-                                        Text("顯示過檢定之全部校系")
+                                        Text("全部校系")
                                         Spacer()
                                     }
                                     HStack{
-                                        Text("本處資料為通過檢定・資料載入可能較久")
+                                        Text("本處資料為通過檢定之所有校系")
                                         Spacer()
                                     }
                                     .foregroundColor(Color(.systemGray))
@@ -320,7 +320,7 @@ struct ResultView : View {
                             HStack{
                                 VStack{
                                     HStack{
-                                        Text("無資料校系 ？")
+                                        Text("無資料校系")
                                         Spacer()
                                     }
                                     HStack{

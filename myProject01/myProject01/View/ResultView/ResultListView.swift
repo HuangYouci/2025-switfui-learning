@@ -105,7 +105,7 @@ struct ResultListView: View {
                                     
                                     HStack{
                                         
-                                        NavigationLink(destination: ResultView(data: gradeData).environmentObject(deptList)){
+                                        NavigationLink(destination: ResultView(data: gradeData)){
                                             Label("載入此資料的分析", systemImage: "square.and.arrow.down")
                                         }
                                         .buttonStyle(.borderedProminent)
@@ -140,6 +140,13 @@ struct ResultListView: View {
                         }
                         
                     }
+                    
+                    HStack {
+                        Text("在首頁提交成績資料後，分析結果即顯示於此處")
+                            .opacity(0.5)
+                            .font(.caption)
+                    }
+                    .padding(.top, 10)
                     
                 }
                 

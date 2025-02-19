@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
 
 @main
 struct myProject01App: App {
@@ -19,11 +20,26 @@ struct myProject01App: App {
     // State
     // --------------- //
     
+    class AppDelegate: UIResponder, UIApplicationDelegate {
+        func application(_ application: UIApplication,
+                         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            MobileAds.shared.start(completionHandler: nil)
+            return true
+        }
+    }
+    
     var body: some Scene {
+        @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+        
         WindowGroup {
-            ContentView()
-                .environmentObject(data)
-                .environmentObject(deptList)
+            if !data.notFirstUse {
+                FirstInfoView()
+                    .environmentObject(data)
+            } else {
+                ContentView()
+                    .environmentObject(data)
+                    .environmentObject(deptList)
+            }
         }
     }
     

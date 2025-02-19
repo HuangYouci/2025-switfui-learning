@@ -59,7 +59,7 @@ struct FirstStageResultView: View {
                         Text(testResultName[index])
                         Spacer()
                         Text(testResultNumber[index]).frame(width: 50, alignment: .trailing)
-                        if displayMore && ( testResultUserGrade[index] != 0 ) {
+                        if displayMore && ( testResultName[index] != "超額篩選" ) {
                             Text(String(testResultUserGrade[index]))
                                 .foregroundColor(testResultUserGrade[index] >= (Int(testResultNumber[index]) ?? 0) ? Color.green : Color.red)
                                 .frame(width: 50, alignment: .trailing)

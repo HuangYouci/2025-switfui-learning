@@ -28,7 +28,6 @@ struct ContentView: View {
                     Text("首頁")
                 }
                 .tag(0)
-                .environmentObject(data)
             
             ResultListView(selectedTab: $selectedTab)
                 .tabItem {
@@ -36,8 +35,6 @@ struct ContentView: View {
                     Text("分析")
                 }
                 .tag(1)
-                .environmentObject(data)
-                .environmentObject(deptList)
             
             ListView(selectedTab: $selectedTab)
                 .tabItem {
@@ -45,7 +42,6 @@ struct ContentView: View {
                     Text("清單")
                 }
                 .tag(3)
-                .environmentObject(deptList)
             
             AboutView(selectedTab: $selectedTab)
                 .tabItem {
@@ -53,7 +49,6 @@ struct ContentView: View {
                     Text("關於")
                 }
                 .tag(2)
-                .environmentObject(data)
         }
     }
 }

@@ -8,15 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		73938C692D576E1D00DE218D /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 73938C682D576E1D00DE218D /* SwiftCSV */; };
+		73FB07182D6599D600325428 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 73FB07172D6599D600325428 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7332E6FD2D4536F50013FE4B /* myProject01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		73FB071A2D65A05700325428 /* Exceptions for "myProject01" folder in "myProject01" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7332E6FC2D4536F50013FE4B /* myProject01 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7332E6FF2D4536F50013FE4B /* myProject01 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				73FB071A2D65A05700325428 /* Exceptions for "myProject01" folder in "myProject01" target */,
+			);
 			path = myProject01;
 			sourceTree = "<group>";
 		};
@@ -27,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73FB07182D6599D600325428 /* GoogleMobileAds in Frameworks */,
 				73938C692D576E1D00DE218D /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +86,7 @@
 			name = myProject01;
 			packageProductDependencies = (
 				73938C682D576E1D00DE218D /* SwiftCSV */,
+				73FB07172D6599D600325428 /* GoogleMobileAds */,
 			);
 			productName = myProject01;
 			productReference = 7332E6FD2D4536F50013FE4B /* myProject01.app */;
@@ -103,6 +119,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				73938C672D576E1D00DE218D /* XCRemoteSwiftPackageReference "SwiftCSV" */,
+				73FB07162D6599D600325428 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7332E6FE2D4536F50013FE4B /* Products */;
@@ -261,10 +278,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"myProject01/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "myProject01/Preview\\ Content myProject01/View/AboutView/FirstInfoAsset.xcassets";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = myProject01/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "學測個申分析系統";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -291,10 +309,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"myProject01/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "myProject01/Preview\\ Content myProject01/View/AboutView/FirstInfoAsset.xcassets";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = myProject01/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "學測個申分析系統";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -346,6 +365,14 @@
 				minimumVersion = 0.10.0;
 			};
 		};
+		73FB07162D6599D600325428 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -353,6 +380,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 73938C672D576E1D00DE218D /* XCRemoteSwiftPackageReference "SwiftCSV" */;
 			productName = SwiftCSV;
+		};
+		73FB07172D6599D600325428 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73FB07162D6599D600325428 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
