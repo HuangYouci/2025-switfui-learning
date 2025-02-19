@@ -1,5 +1,5 @@
 //
-//  deptListAnalyse.swift
+//  deptListCSV.swift
 //  myProject01
 //
 //  Created by 黃宥琦 on 2025/2/8.
@@ -7,6 +7,8 @@
 
 import SwiftCSV
 import Foundation
+
+/// 讀取科系 CSV 資料
 
 func loadCSVData() -> [deptListModel] {
     guard let url = Bundle.main.url(forResource: "deptList", withExtension: "csv") else {

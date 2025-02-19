@@ -14,6 +14,7 @@ struct myProject01App: App {
     // EnvironmentObject
     // StateObject
     @StateObject private var data = UserDef()
+    @StateObject private var deptList = DeptDataModel()
     // Binding
     // State
     // --------------- //
@@ -22,6 +23,7 @@ struct myProject01App: App {
         WindowGroup {
             ContentView()
                 .environmentObject(data)
+                .environmentObject(deptList)
         }
     }
     

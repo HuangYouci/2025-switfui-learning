@@ -19,6 +19,8 @@ struct FirstStageResultView: View {
     // --------------- //
     
     var department: deptListModel
+    var data: gradeData
+    let displayMore: Bool
     
     var body: some View {
         
@@ -40,22 +42,30 @@ struct FirstStageResultView: View {
                 
                 let testResultNumber = deptListFunc.parseTestResult(department.testResult, outputType: 1)
                 
+                let testResultUserGrade = deptListFunc.convertSubjects(testResultName, gradeData: data)
+                
                 HStack{
                     Text("科目 (組合)")
                     Spacer()
-                    Text("級分")
+                    Text("級分").frame(width: 50, alignment: .trailing)
+                    if displayMore && testResultUserGrade != [0] {
+                        Text("你的").frame(width: 50, alignment: .trailing)
+                    }
                 }
                 .bold()
                 
-                    
-                ForEach(Array(zip(testResultName, testResultNumber)), id: \.0) { name, number in
+                ForEach(Array(testResultName.indices), id: \.self) { index in
                     HStack {
-                        Text(name)
+                        Text(testResultName[index])
                         Spacer()
-                        Text(number)
+                        Text(testResultNumber[index]).frame(width: 50, alignment: .trailing)
+                        if displayMore && ( testResultUserGrade[index] != 0 ) {
+                            Text(String(testResultUserGrade[index]))
+                                .foregroundColor(testResultUserGrade[index] >= (Int(testResultNumber[index]) ?? 0) ? Color.green : Color.red)
+                                .frame(width: 50, alignment: .trailing)
+                        }
                     }
                 }
-                    
                 
             }
             .padding(.bottom, 10)

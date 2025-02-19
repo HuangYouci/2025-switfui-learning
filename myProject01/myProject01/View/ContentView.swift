@@ -13,6 +13,7 @@ struct ContentView: View {
     // EnvironmentObject
     // StateObject
     @EnvironmentObject private var data: UserDef
+    @EnvironmentObject var deptList: DeptDataModel
     // Binding
     // State
     @State private var selectedTab = 0
@@ -27,6 +28,7 @@ struct ContentView: View {
                     Text("首頁")
                 }
                 .tag(0)
+                .environmentObject(data)
             
             ResultListView(selectedTab: $selectedTab)
                 .tabItem {
@@ -34,13 +36,16 @@ struct ContentView: View {
                     Text("分析")
                 }
                 .tag(1)
+                .environmentObject(data)
+                .environmentObject(deptList)
             
-            AllListView(selectedTab: $selectedTab)
+            ListView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "list.bullet")
                     Text("清單")
                 }
                 .tag(3)
+                .environmentObject(deptList)
             
             AboutView(selectedTab: $selectedTab)
                 .tabItem {
@@ -48,7 +53,7 @@ struct ContentView: View {
                     Text("關於")
                 }
                 .tag(2)
+                .environmentObject(data)
         }
-        .environmentObject(data)
     }
 }

@@ -66,7 +66,7 @@ class UserDef: ObservableObject {
         }
     }
     
-    @Published var favoriteDept: [Int] {
+    @Published var favoriteDept: [String] {
         didSet {
             UserDefaults.standard.set(favoriteDept, forKey: "favoriteDept")
         }
@@ -88,25 +88,11 @@ class UserDef: ObservableObject {
         self.username = UserDefaults.standard.string(forKey: "username") ?? "用戶"
         self.userResultData = Self.loadUserResultData() ?? [gradeData(gradeCH: 11, gradeEN: 14, gradeMA: 7, gradeMB: 11, gradeSC: 12, gradeSO: 11, gradeEL: 1, gradePC: 3, gradePP: 3, gradeSK1: 0, gradeSK2: 0, gradeSK3: 0, gradeSK4: 0, gradeSK5: 0, gradeSKT: 0)]
         self.displayMore = UserDefaults.standard.integer(forKey: "displayMore")
-        self.favoriteDept = UserDefaults.standard.array(forKey: "favoriteDept") as? [Int] ?? []
+        self.favoriteDept = UserDefaults.standard.array(forKey: "favoriteDept") as? [String] ?? []
         self.analyzeCount = UserDefaults.standard.integer(forKey: "analyzeCount")
     }
     
     // MARK: Functions
-    
-    /*
-    
-    func updateTotal(){
-        gradeTotal1 = calculateGradeTotal(CH: true, MA: true, SC: true, EN: true)
-        gradeTotal2 = calculateGradeTotal(CH: true, MA: true, SO: true, EN: true)
-        gradeTotal3 = calculateGradeTotal(CH: true, MB: true, SO: true, EN: true)
-    }
-    
-    func calculateGradeTotal(CH: Bool = false, MA: Bool = false, MB: Bool = false, SC: Bool = false, SO: Bool = false, EN: Bool = false) -> Int {
-        return ((CH ? gradeCH : 0 ) + (MA ? gradeMA : 0 ) + (MB ? gradeMB : 0 ) + (SC ? gradeSC : 0 ) + (SO ? gradeSO : 0 ) + (EN ? gradeEN : 0 ))
-    }
-     
-     */
     
     // 插入一筆新資料
     

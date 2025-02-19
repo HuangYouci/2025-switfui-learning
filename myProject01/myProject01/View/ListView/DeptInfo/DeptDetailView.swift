@@ -40,10 +40,10 @@ struct DeptDetailView: View {
                 
                 FirstStageFilterView(department: department)
                 
-                FirstStageResultView(department: department)
+                FirstStageResultView(department: department, data: data, displayMore: displayMore) // 需要 data
                 
                 SecondStageSelectionView(department: department)
-                    
+                
                 DepartmentNotesView(department: department)
                 
                 if displayMore { PassChanceView(department: department, data: data) } // 需要 data

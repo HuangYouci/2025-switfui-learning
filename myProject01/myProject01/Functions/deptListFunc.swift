@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 本 Class 用於單一科系的資料分析
 
 class deptListFunc {
     
@@ -359,10 +360,38 @@ class deptListFunc {
                     return parts.indices.contains(outputType) ? parts[outputType] : ""
                 }
         }
+    
+    /// 套用篩選結果用戶資料
+    
+    static func convertSubjects(_ subjects: [String], gradeData: gradeData) -> [Int] {
+        
+        let mapping: [String: Int] = [
+            "國文": gradeData.gradeCH,
+            "英文": gradeData.gradeEN,
+            "數A": gradeData.gradeMA,
+            "數B": gradeData.gradeMB,
+            "自然": gradeData.gradeSC,
+            "社會": gradeData.gradeSO,
+            "超額篩選": 0
+        ]
+        
+        if subjects == ["無資料"] {
+            return [0]
+        }
+        
+        return subjects.map { subject in
+                let values = subject.split(separator: "+")
+                    .compactMap { mapping[String($0)] }
+                
+                return values.count > 1 ? values.reduce(0, +) : values.first ?? 0
+        }
+        
+    }
 
     
     /// 落點分析
-    /// 傳入篩選結果和使用者資料 Data()，倍數目前尚未實裝
+    /// 演算法
+    /// 傳入篩選結果和使用者資料 Data()
     
     static func calPassChance(testResult: String = "--", data: gradeData) -> Double {
         

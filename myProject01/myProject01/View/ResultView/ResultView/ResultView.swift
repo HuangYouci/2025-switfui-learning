@@ -12,6 +12,7 @@ struct ResultView : View {
     
     // --------------- //
     // EnvironmentObject
+    @EnvironmentObject var deptList: DeptDataModel
     // StateObject
     // Binding
     // State
@@ -19,12 +20,12 @@ struct ResultView : View {
     @State var sheetExplansion: String?
     // --------------- //
     
+    // 成績資料
     var data: gradeData
     
-    let deptList: [deptListModel] = loadCSVData()
-    
+    // 通過檢定
     var filiteredDept: [deptListModel] {
-        deptList.filter { dept in
+        deptList.departments.filter { dept in
             deptListFunc.checkTestPassed(
                 CH: dept.chineseTest,
                 EN: dept.englishTest,
@@ -38,6 +39,54 @@ struct ResultView : View {
                 PP: dept.programmingPracticalTest
             )
         }
+    }
+    
+    // 五顆星
+    var s5depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance >= 0.8
+        }
+    }
+    
+    // 四顆星
+    var s4depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance >= 0.6 && dept.passChance < 0.8
+        }
+    }
+    
+    // 三顆星
+    var s3depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance >= 0.4 && dept.passChance < 0.6
+        }
+    }
+    
+    // 二顆星
+    var s2depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance >= 0.2 && dept.passChance < 0.4
+        }
+    }
+    
+    // 一顆星
+    var s1depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance > 0 && dept.passChance < 0.2
+        }
+    }
+    
+    // 無資料
+    var s0depts: [deptListModel] {
+        filiteredDept.filter { dept in
+            dept.passChance == 0
+        }
+    }
+    
+    // 排序過
+    
+    var sortedDepts: [deptListModel] {
+        filiteredDept.sorted(by: { $0.passChance > $1.passChance })
     }
     
     var body: some View {
@@ -111,7 +160,7 @@ struct ResultView : View {
                 
                 LazyVStack{
                     
-                    NavigationLink(destination: Result5SView(data: data, filiteredDept: filiteredDept)){
+                    NavigationLink(destination: DeptListView(deptList: s5depts, title: "保底校系", displayMore: true, gradeData: data)){
                         VStack{
                             HStack{
                                 VStack{
@@ -137,7 +186,7 @@ struct ResultView : View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    NavigationLink(destination: Result4SView(data: data, filiteredDept: filiteredDept)){
+                    NavigationLink(destination: DeptListView(deptList: s4depts, title: "安全校系", displayMore: true, gradeData: data)){
                         VStack{
                             HStack{
                                 VStack{
@@ -163,7 +212,7 @@ struct ResultView : View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    NavigationLink(destination: Result3SView(data: data, filiteredDept: filiteredDept)){
+                    NavigationLink(destination: DeptListView(deptList: s3depts, title: "一般校系", displayMore: true, gradeData: data)){
                         VStack{
                             HStack{
                                 VStack{
@@ -189,7 +238,7 @@ struct ResultView : View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    NavigationLink(destination: Result2SView(data: data, filiteredDept: filiteredDept)){
+                    NavigationLink(destination: DeptListView(deptList: s2depts, title: "進攻校系", displayMore: true, gradeData: data)){
                         VStack{
                             HStack{
                                 VStack{
@@ -215,7 +264,7 @@ struct ResultView : View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    NavigationLink(destination: Result1SView(data: data, filiteredDept: filiteredDept)){
+                    NavigationLink(destination: DeptListView(deptList: s1depts, title: "夢幻校系", displayMore: true, gradeData: data)){
                         VStack{
                             HStack{
                                 VStack{
@@ -224,7 +273,7 @@ struct ResultView : View {
                                         Spacer()
                                     }
                                     HStack{
-                                        Text("系統計算有極低可能錄取的科系列表")
+                                        Text("系統計算有小機率錄取的科系列表")
                                         Spacer()
                                     }
                                     .foregroundColor(Color(.systemGray))
@@ -241,8 +290,57 @@ struct ResultView : View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    ResultAllListView(data: data, deptList: filiteredDept)
-                        .padding(.vertical, 10)
+                    NavigationLink(destination: DeptListView(deptList: sortedDepts, title: "通過檢定的校系", displayMore: true, gradeData: data)){
+                        VStack{
+                            HStack{
+                                VStack{
+                                    HStack{
+                                        Text("顯示過檢定之全部校系")
+                                        Spacer()
+                                    }
+                                    HStack{
+                                        Text("本處資料為通過檢定・資料載入可能較久")
+                                        Spacer()
+                                    }
+                                    .foregroundColor(Color(.systemGray))
+                                }
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color(.systemGray))
+                                    .padding(.trailing, 5)
+                            }
+                        }
+                        .padding(10)
+                        .background(Color(.quaternarySystemFill))
+                        .cornerRadius(10)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    NavigationLink(destination: DeptListView(deptList: s0depts, title: "無資料校系", displayMore: true, gradeData: data)){
+                        VStack{
+                            HStack{
+                                VStack{
+                                    HStack{
+                                        Text("無資料校系 ？")
+                                        Spacer()
+                                    }
+                                    HStack{
+                                        Text("沒有去年的分數資料而無法分析的校系")
+                                        Spacer()
+                                    }
+                                    .foregroundColor(Color(.systemGray))
+                                }
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color(.systemGray))
+                                    .padding(.trailing, 5)
+                            }
+                        }
+                        .padding(10)
+                        .background(Color.black.opacity(0.1))
+                        .background(Color(.quaternarySystemFill))
+                        .cornerRadius(10)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
                     
                 }
                 
@@ -254,6 +352,9 @@ struct ResultView : View {
         .padding()
         .sheet(isPresented: $isShowSheet){
             SheetExplansionView(explansion: $sheetExplansion)
+        }
+        .onAppear {
+            
         }
             
     }

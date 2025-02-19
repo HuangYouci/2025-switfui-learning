@@ -154,7 +154,7 @@ struct HomeView: View {
                 }
                 .padding(.bottom,10)
                 
-                Text("成績已輸入完成，資料已經更新。快到「分析」結果頁查看結果！")
+                Text("成績已輸入完成，資料已經新增。快到「分析」結果頁選擇該筆分析結果，查看詳細分析！")
                     .font(.caption)
                     .opacity(0.5)
                     .padding(.bottom,10)
@@ -174,7 +174,7 @@ struct HomeView: View {
             } label : {
                 Spacer()
                 
-                Text(data.analyzeCount < 1 ? "分析次數不足" : isFinishedForm ? "查看分析結果" : "提交 ( -1 分析次數 )")
+                Text(data.analyzeCount < 1 ? "分析次數不足" : "提交")
                 
                 Spacer()
             }
